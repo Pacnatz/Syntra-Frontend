@@ -22,6 +22,7 @@ function Welcome() {
     let bars = [createBar(xLevel, yLevel)];
     let count = 0;
     let currentBarIndex = 0;
+    let isClearing = false;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -52,13 +53,25 @@ function Welcome() {
         xLevel += barWidth + barGap;
 
         if (currentBarIndex >= maxBars) {
-          currentBarIndex = 0;
-          xLevel = 0;
-          yLevel = Math.random() * canvas.height;
-          bars = [createBar(xLevel, yLevel)];
+          isClearing = true;
         } else {
           bars[currentBarIndex] = createBar(xLevel, yLevel);
         }
+      }
+    };
+
+    const clearBars = () => {
+      if (bars.length > 0) {
+        bars.shift();
+      }
+
+      if (bars.length === 0) {
+        count = 0;
+        currentBarIndex = 0;
+        xLevel = 0;
+        yLevel = Math.random() * canvas.height;
+        bars = [createBar(xLevel, yLevel)];
+        isClearing = false;
       }
     };
 
@@ -89,7 +102,11 @@ function Welcome() {
     };
 
     const render = setInterval(() => {
-      updateBars();
+      if (isClearing) {
+        clearBars();
+      } else {
+        updateBars();
+      }
       drawBars();
     }, renderInterval);
 
