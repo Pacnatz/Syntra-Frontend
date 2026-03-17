@@ -79,15 +79,9 @@ function Welcome() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (const bar of bars) {
         const isRising = bar.barHeight <= bar.startHeight;
-        const candleColor = isRising ? "#0f0" : "#f00";
-
-        // Draw wick
-        ctx.strokeStyle = candleColor;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(bar.x + barWidth / 2, bar.high);
-        ctx.lineTo(bar.x + barWidth / 2, bar.low);
-        ctx.stroke();
+        const candleColor = isRising
+          ? "rgba(255, 255, 255, 0.6)"
+          : "rgba(24, 241, 233, 0.6)";
 
         // Get the top y position of the bar
         const barTop = Math.min(bar.startHeight, bar.barHeight);
@@ -96,6 +90,28 @@ function Welcome() {
           1,
           Math.abs(bar.barHeight - bar.startHeight),
         );
+        const barBottom = barTop + barHeight;
+        const wickX = bar.x + barWidth / 2;
+        const wickTop = Math.min(bar.high, bar.low);
+        const wickBottom = Math.max(bar.high, bar.low);
+
+        // Draw wick above and below the body only so it does not show through transparency.
+        ctx.strokeStyle = candleColor;
+        ctx.lineWidth = 1;
+        if (wickTop < barTop) {
+          ctx.beginPath();
+          ctx.moveTo(wickX, wickTop);
+          ctx.lineTo(wickX, barTop);
+          ctx.stroke();
+        }
+
+        if (wickBottom > barBottom) {
+          ctx.beginPath();
+          ctx.moveTo(wickX, barBottom);
+          ctx.lineTo(wickX, wickBottom);
+          ctx.stroke();
+        }
+
         ctx.fillStyle = candleColor;
         ctx.fillRect(bar.x, barTop, barWidth, barHeight);
       }
