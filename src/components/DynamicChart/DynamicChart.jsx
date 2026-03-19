@@ -26,7 +26,7 @@ function DynamicChart() {
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      maxBars = Math.max(1, Math.floor(canvas.width / (barWidth + barGap)));
+      maxBars = Math.max(1, Math.floor(canvas.width / (barWidth + barGap)) + 1);
     };
 
     resizeCanvas();
