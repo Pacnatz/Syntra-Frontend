@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import DynamicChart from "../../components/DynamicChart/DynamicChart";
+import LoginToggle from "../../components/LoginToggle/LoginToggle";
 import "./Welcome.css";
 
 function Welcome() {
@@ -39,13 +40,63 @@ function Welcome() {
             smarter—side by side.
           </p>
         </div>
-        <div className="welcome__form">
-          <h2 className="welcome__form-title">Join the Market Collective</h2>
+        <div className="welcome__panel">
+          <h2 className="welcome__panel-title">Join the Market Collective</h2>
+          <LoginToggle />
           {signup ? (
-            <form
-              onSubmit={handleRegistration}
-              className="welcome__signup"
-            ></form>
+            <form onSubmit={handleRegistration} className="welcome__signup">
+              <label htmlFor="username" className="welcome__signup-label">
+                Username
+                <input
+                  name="username"
+                  id="username"
+                  type="text"
+                  placeholder="Username"
+                  className="welcome__signup-input"
+                />
+              </label>
+              <label htmlFor="email" className="welcome__signup-label">
+                Email
+                <input
+                  name="email"
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  className="welcome__signup-input"
+                />
+              </label>
+              <label htmlFor="password" className="welcome__signup-label">
+                Password
+                <input
+                  name="password"
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  className="welcome__signup-input"
+                />
+              </label>
+              <label
+                htmlFor="confirm-password"
+                className="welcome__signup-label"
+              >
+                Confirm Password
+                <input
+                  name="confirm-password"
+                  id="confirm-password"
+                  type="password"
+                  placeholder="Confirm Password"
+                  className="welcome__signup-input"
+                />
+              </label>
+              <button className="welcome__signup-btn">
+                Get Started
+                <img
+                  src="src\assets\RightArrow.svg"
+                  alt=""
+                  className="welcome__signup-arrow"
+                />
+              </button>
+            </form>
           ) : (
             <form onSubmit={handleSignin} className="welcome__signin"></form>
           )}
