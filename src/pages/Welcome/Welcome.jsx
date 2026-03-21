@@ -89,7 +89,7 @@ function Welcome() {
                 />
               </label>
               <button className="welcome__signup-btn">
-                Get Started
+                <span className="welcome__signup-btn-text">Get Started</span>
                 <img
                   src="src\assets\RightArrow.svg"
                   alt=""

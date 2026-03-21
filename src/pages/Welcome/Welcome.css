@@ -2,6 +2,8 @@
   height: 100%;
   width: 100%;
   position: relative;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 800;
 }
 
 .welcome__logo {
@@ -21,8 +23,6 @@
 .welcome__logo-text {
   margin-left: 12px;
   font-size: 32px;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-weight: 800;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -48,14 +48,11 @@
   margin: 0;
   max-width: 721px;
   font-size: 64px;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-weight: 800;
 }
 
 .welcome__subtitle {
   margin: 29px 0 0;
   font-size: 18px;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
   font-weight: 400;
 }
 
@@ -77,8 +74,7 @@
   margin: 0;
   margin-bottom: 29px;
   font-size: 48px;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .welcome__signup {
@@ -93,9 +89,11 @@
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  font-family: "Inter", Arial, Helvetica, sans-serif;
-  font-weight: 800;
   font-size: 16px;
+}
+
+.welcome__signup-label:focus-within {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .welcome__signup-input {
@@ -104,32 +102,87 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
   font-family: "Inter", Arial, Helvetica, sans-serif;
   font-weight: 800;
   line-height: 20px;
 }
 
+.welcome__signup-input:focus {
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+@property --signup-btn-alpha {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0.1;
+}
+
+@property --signup-btn-gradient-1 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --signup-btn-gradient-2 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 10%;
+}
+
+@property --signup-btn-gradient-3 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 25%;
+}
+
+@property --signup-btn-gradient-4 {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+
 .welcome__signup-btn {
   margin-top: 29px;
-  padding: 16px 0;
+  padding: 16px 0 16px 45px;
   width: 212px;
+  color: rgba(255, 255, 255, 0.7);
   border-radius: 12px;
   border: 1px solid rgba(24, 241, 233, 0.3);
   background: linear-gradient(
-    90deg,
-    rgba(24, 241, 233, 0.1) 0%,
-    rgba(36, 208, 222, 0.1) 33%,
-    rgba(49, 145, 205, 0.1) 66%,
-    rgba(35, 132, 201, 0.1) 100%
+    to right,
+    rgba(24, 241, 233, var(--signup-btn-alpha)) var(--signup-btn-gradient-1),
+    rgba(36, 208, 222, var(--signup-btn-alpha)) var(--signup-btn-gradient-2),
+    rgba(49, 145, 205, var(--signup-btn-alpha)) var(--signup-btn-gradient-3),
+    rgba(35, 132, 201, var(--signup-btn-alpha)) var(--signup-btn-gradient-4)
   );
   font-size: 16px;
   font-family: "Inter", Arial, Helvetica, sans-serif;
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.7);
   display: flex;
-  justify-content: center;
   align-items: center;
   column-gap: 10px;
+  transition:
+    --signup-btn-alpha 0.3s ease,
+    --signup-btn-gradient-1 0.8s ease 0.1s,
+    --signup-btn-gradient-2 0.8s ease 0.1s,
+    --signup-btn-gradient-3 0.8s ease 0.1s,
+    --signup-btn-gradient-4 0.8s ease 0.1s,
+    column-gap 0.3s ease;
+}
+
+.welcome__signup-btn:hover {
+  border: 1px solid rgba(24, 241, 233, 0.8);
+  background-position: 100%, 0;
+  color: rgba(255, 255, 255, 0.9);
+  opacity: 1;
+  column-gap: 20px;
+  --signup-btn-alpha: 0.6;
+  --signup-btn-gradient-1: 80%;
+  --signup-btn-gradient-2: 85%;
+  --signup-btn-gradient-3: 90%;
+  --signup-btn-gradient-4: 95%;
 }
