@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DynamicChart from "../../components/DynamicChart/DynamicChart";
 import LoginToggle from "../../components/LoginToggle/LoginToggle";
@@ -6,6 +6,7 @@ import "./Welcome.css";
 
 function Welcome() {
   const [signup, setSignup] = useState(true);
+  const [rotationIndex, setRotationIndex] = useState(0);
 
   const handleRegistration = (e) => {
     e.preventDefault();
@@ -17,6 +18,15 @@ function Welcome() {
     // Handle sign-in logic here
   };
 
+  useEffect(() => {
+    const textRotationInterval = setInterval(() => {
+      setRotationIndex((prevIndex) => {
+        return prevIndex === 2 ? 0 : prevIndex + 1;
+      });
+    }, 3000); // Rotate text every 3 seconds
+    return () => clearInterval(textRotationInterval);
+  }, []);
+
   return (
     <div className="welcome">
       <DynamicChart />
@@ -26,7 +36,7 @@ function Welcome() {
           alt="Logo"
           className="welcome__logo-img"
         />
-        <span className="welcome__logo-text">Syntra</span>
+        <p className="welcome__logo-text">Syntra</p>
       </Link>
       <div className="welcome__content">
         <div className="welcome__hero-text">
@@ -39,6 +49,47 @@ function Welcome() {
             your portfolio faster by connecting with friends and trading
             smarter—side by side.
           </p>
+          <ul className="welcome__rotating-text">
+            <li
+              className={
+                "welcome__rotating-text-item" +
+                (rotationIndex === 0
+                  ? " welcome__rotating-text-item_active"
+                  : "") +
+                (rotationIndex === 1
+                  ? " welcome__rotating-text-item_close"
+                  : "")
+              }
+            >
+              No more screenshots.
+            </li>
+            <li
+              className={
+                "welcome__rotating-text-item" +
+                (rotationIndex === 1
+                  ? " welcome__rotating-text-item_active"
+                  : "") +
+                (rotationIndex === 2
+                  ? " welcome__rotating-text-item_close"
+                  : "")
+              }
+            >
+              No more switching tabs.
+            </li>
+            <li
+              className={
+                "welcome__rotating-text-item" +
+                (rotationIndex === 2
+                  ? " welcome__rotating-text-item_active"
+                  : "") +
+                (rotationIndex === 0
+                  ? " welcome__rotating-text-item_close"
+                  : "")
+              }
+            >
+              Everything happens in one place.
+            </li>
+          </ul>
         </div>
         <div className="welcome__panel">
           <h2 className="welcome__panel-title">Join the Market Collective</h2>
@@ -89,7 +140,7 @@ function Welcome() {
                 />
               </label>
               <button className="welcome__signup-btn">
-                <span className="welcome__signup-btn-text">Get Started</span>
+                <p className="welcome__signup-btn-text">Get Started</p>
                 <img
                   src="src\assets\RightArrow.svg"
                   alt=""

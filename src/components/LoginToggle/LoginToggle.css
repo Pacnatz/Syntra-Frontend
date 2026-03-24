@@ -52,17 +52,21 @@
   transition: left 0.3s ease;
 }
 
+/*
 .login-toggle:hover
   .login-toggle__checkbox:not(:checked)
   ~ .login-toggle__slider {
-  /* styles when hovering and unchecked */
+  // styles when hovering and unchecked
 }
+*/
 
 .login-toggle__checkbox:checked ~ .login-toggle__slider {
   /* styles when not hovering and checked */
   left: 156px;
 }
 
+/*
 .login-toggle:hover .login-toggle__checkbox:checked ~ .login-toggle__slider {
-  /* styles when hovering and checked */
+  // styles when hovering and checked
 }
+*/

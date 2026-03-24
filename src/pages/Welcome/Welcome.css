@@ -21,7 +21,7 @@
 }
 
 .welcome__logo-text {
-  margin-left: 12px;
+  margin: 0 0 0 12px;
   font-size: 32px;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -39,7 +39,6 @@
 
 .welcome__hero-text {
   max-width: 759px;
-  padding-bottom: 330px;
   margin-left: 106px;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -54,6 +53,42 @@
   margin: 29px 0 0;
   font-size: 18px;
   font-weight: 400;
+}
+
+.welcome__rotating-text {
+  list-style-type: none;
+  margin-top: 98px;
+  height: 261px;
+  font-size: 32px;
+  position: relative;
+}
+
+.welcome__rotating-text-item {
+  margin: 0;
+  text-align: center;
+  position: absolute;
+  top: 122px;
+  width: 534px;
+  opacity: 0;
+  transition:
+    top 1s ease,
+    opacity 1s ease;
+}
+
+.welcome__rotating-text-item_active {
+  top: 61px;
+  opacity: 1;
+  transition:
+    top 1s ease,
+    opacity 1s ease;
+}
+
+.welcome__rotating-text-item_close {
+  top: 0px;
+  opacity: 0;
+  transition:
+    top 1s ease,
+    opacity 1s ease;
 }
 
 .welcome__panel {
@@ -185,4 +220,8 @@
   --signup-btn-gradient-2: 85%;
   --signup-btn-gradient-3: 90%;
   --signup-btn-gradient-4: 95%;
+}
+
+.welcome__signup-btn-text {
+  margin: 0;
 }
