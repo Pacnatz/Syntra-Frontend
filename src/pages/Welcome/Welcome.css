@@ -92,6 +92,7 @@
 }
 
 .welcome__panel {
+  min-height: 770px;
   margin-right: 87px;
   color: rgba(255, 255, 255, 0.9);
   padding: 46px 84px 62px;
@@ -148,6 +149,58 @@
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.welcome__rememberme-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 16px;
+  width: 25%;
+}
+
+.welcome__rememberme-label:hover {
+  cursor: pointer;
+}
+
+.welcome__rememberme-checkbox {
+  display: none;
+}
+
+.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-custom-checkbox {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-custom-checkmark {
+  display: block;
+}
+
+.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.welcome__rememberme-custom-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.welcome__rememberme-custom-checkmark {
+  display: none;
+  top: 4px;
+  left: 4px;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/Checkmark.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
 }
 
 @property --signup-btn-alpha {
@@ -224,4 +277,20 @@
 
 .welcome__signup-btn-text {
   margin: 0;
+}
+
+.welcome__signin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 587px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.welcome__signin-inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  row-gap: 44px;
 }

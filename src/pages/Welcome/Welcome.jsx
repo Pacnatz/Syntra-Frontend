@@ -8,6 +8,10 @@ function Welcome() {
   const [signup, setSignup] = useState(true);
   const [rotationIndex, setRotationIndex] = useState(0);
 
+  const handleToggle = () => {
+    setSignup((prevSignup) => !prevSignup);
+  };
+
   const handleRegistration = (e) => {
     e.preventDefault();
     // Handle registration logic here
@@ -93,7 +97,7 @@ function Welcome() {
         </div>
         <div className="welcome__panel">
           <h2 className="welcome__panel-title">Join the Market Collective</h2>
-          <LoginToggle />
+          <LoginToggle handleToggle={handleToggle} />
           {signup ? (
             <form onSubmit={handleRegistration} className="welcome__signup">
               <label htmlFor="username" className="welcome__signup-label">
@@ -149,7 +153,53 @@ function Welcome() {
               </button>
             </form>
           ) : (
-            <form onSubmit={handleSignin} className="welcome__signin"></form>
+            <form onSubmit={handleSignin} className="welcome__signin">
+              <div className="welcome__signin-inputs">
+                <label htmlFor="username" className="welcome__signup-label">
+                  Username
+                  <input
+                    name="username"
+                    id="username"
+                    type="text"
+                    placeholder="Username"
+                    className="welcome__signup-input"
+                  />
+                </label>
+                <label htmlFor="password" className="welcome__signup-label">
+                  Password
+                  <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    className="welcome__signup-input"
+                  />
+                </label>
+                <label
+                  htmlFor="rememberme"
+                  className="welcome__rememberme-label"
+                >
+                  <input
+                    name="rememberme"
+                    id="rememberme"
+                    type="checkbox"
+                    className="welcome__rememberme-checkbox"
+                  />
+                  <span className="welcome__rememberme-custom-checkbox"></span>
+                  <span className="welcome__rememberme-custom-checkmark"></span>
+                  <span className="welcome__rememberme-text">Remember me</span>
+                </label>
+              </div>
+
+              <button className="welcome__signup-btn">
+                <p className="welcome__signup-btn-text">Continue</p>
+                <img
+                  src="src\assets\RightArrow.svg"
+                  alt=""
+                  className="welcome__signup-arrow"
+                />
+              </button>
+            </form>
           )}
         </div>
       </div>
