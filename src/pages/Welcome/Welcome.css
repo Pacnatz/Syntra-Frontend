@@ -113,26 +113,34 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.welcome__signup {
+.welcome__form {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  row-gap: 44px;
+  height: 587px;
   color: rgba(255, 255, 255, 0.7);
 }
 
-.welcome__signup-label {
+.welcome__inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  row-gap: 44px;
+}
+
+.welcome__form-label {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   font-size: 16px;
 }
 
-.welcome__signup-label:focus-within {
+.welcome__form-label:focus-within {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.welcome__signup-input {
+.welcome__form-input {
   width: 630px;
   padding: 16px 0 16px 19px;
   border-radius: 12px;
@@ -145,13 +153,13 @@
   line-height: 20px;
 }
 
-.welcome__signup-input:focus {
+.welcome__form-input:focus {
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-.welcome__rememberme-label {
+.welcome__checkbox-label {
   position: relative;
   display: flex;
   align-items: center;
@@ -160,28 +168,28 @@
   width: 25%;
 }
 
-.welcome__rememberme-label:hover {
+.welcome__checkbox-label:hover {
   cursor: pointer;
 }
 
-.welcome__rememberme-checkbox {
+.welcome__checkbox-input {
   display: none;
 }
 
-.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-custom-checkbox {
+.welcome__checkbox-input:checked ~ .welcome__checkbox-custom-checkbox {
   background-color: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-custom-checkmark {
+.welcome__checkbox-input:checked ~ .welcome__checkbox-custom-checkmark {
   display: block;
 }
 
-.welcome__rememberme-checkbox:checked ~ .welcome__rememberme-text {
+.welcome__checkbox-input:checked ~ .welcome__checkbox-text {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.welcome__rememberme-custom-checkbox {
+.welcome__checkbox-box {
   width: 24px;
   height: 24px;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -189,7 +197,7 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.welcome__rememberme-custom-checkmark {
+.welcome__checkbox-checkmark {
   display: none;
   top: 4px;
   left: 4px;
@@ -235,7 +243,7 @@
 
 .welcome__signup-btn {
   margin-top: 29px;
-  padding: 16px 0 16px 45px;
+  padding: 16px 0;
   width: 212px;
   color: rgba(255, 255, 255, 0.7);
   border-radius: 12px;
@@ -252,7 +260,7 @@
   font-weight: 800;
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  justify-content: center;
   transition:
     --signup-btn-alpha 0.3s ease,
     --signup-btn-gradient-1 0.8s ease 0.1s,
@@ -267,7 +275,6 @@
   background-position: 100%, 0;
   color: rgba(255, 255, 255, 0.9);
   opacity: 1;
-  column-gap: 20px;
   --signup-btn-alpha: 0.6;
   --signup-btn-gradient-1: 80%;
   --signup-btn-gradient-2: 85%;
@@ -275,22 +282,19 @@
   --signup-btn-gradient-4: 95%;
 }
 
+.welcome__signup-btn:hover .welcome__signup-arrow {
+  right: -35px;
+}
+
 .welcome__signup-btn-text {
   margin: 0;
+  position: relative;
+  translate: -20% 0;
 }
 
-.welcome__signin {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 587px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.welcome__signin-inputs {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  row-gap: 44px;
+.welcome__signup-arrow {
+  position: absolute;
+  right: -30px;
+  top: 1px;
+  transition: right 0.3s ease;
 }

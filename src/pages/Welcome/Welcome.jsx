@@ -99,105 +99,108 @@ function Welcome() {
           <h2 className="welcome__panel-title">Join the Market Collective</h2>
           <LoginToggle handleToggle={handleToggle} />
           {signup ? (
-            <form onSubmit={handleRegistration} className="welcome__signup">
-              <label htmlFor="username" className="welcome__signup-label">
-                Username
-                <input
-                  name="username"
-                  id="username"
-                  type="text"
-                  placeholder="Username"
-                  className="welcome__signup-input"
-                />
-              </label>
-              <label htmlFor="email" className="welcome__signup-label">
-                Email
-                <input
-                  name="email"
-                  id="email"
-                  type="email"
-                  placeholder="Email"
-                  className="welcome__signup-input"
-                />
-              </label>
-              <label htmlFor="password" className="welcome__signup-label">
-                Password
-                <input
-                  name="password"
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  className="welcome__signup-input"
-                />
-              </label>
-              <label
-                htmlFor="confirm-password"
-                className="welcome__signup-label"
-              >
-                Confirm Password
-                <input
-                  name="confirm-password"
-                  id="confirm-password"
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="welcome__signup-input"
-                />
-              </label>
-              <button className="welcome__signup-btn">
-                <p className="welcome__signup-btn-text">Get Started</p>
-                <img
-                  src="src\assets\RightArrow.svg"
-                  alt=""
-                  className="welcome__signup-arrow"
-                />
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={handleSignin} className="welcome__signin">
-              <div className="welcome__signin-inputs">
-                <label htmlFor="username" className="welcome__signup-label">
+            <form onSubmit={handleRegistration} className="welcome__form">
+              <div className="welcome__inputs">
+                <label htmlFor="username" className="welcome__form-label">
                   Username
                   <input
                     name="username"
                     id="username"
                     type="text"
                     placeholder="Username"
-                    className="welcome__signup-input"
+                    className="welcome__form-input"
                   />
                 </label>
-                <label htmlFor="password" className="welcome__signup-label">
+                <label htmlFor="email" className="welcome__form-label">
+                  Email
+                  <input
+                    name="email"
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    className="welcome__form-input"
+                  />
+                </label>
+                <label htmlFor="password" className="welcome__form-label">
                   Password
                   <input
                     name="password"
                     id="password"
                     type="password"
                     placeholder="Password"
-                    className="welcome__signup-input"
+                    className="welcome__form-input"
                   />
                 </label>
                 <label
-                  htmlFor="rememberme"
-                  className="welcome__rememberme-label"
+                  htmlFor="confirm-password"
+                  className="welcome__form-label"
                 >
+                  Confirm Password
+                  <input
+                    name="confirm-password"
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Confirm Password"
+                    className="welcome__form-input"
+                  />
+                </label>
+              </div>
+              <button className="welcome__signup-btn">
+                <p className="welcome__signup-btn-text">
+                  Get Started
+                  <img
+                    src="src/assets/RightArrow.svg"
+                    alt=""
+                    className="welcome__signup-arrow"
+                  />
+                </p>
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleSignin} className="welcome__form">
+              <div className="welcome__inputs">
+                <label htmlFor="username" className="welcome__form-label">
+                  Username
+                  <input
+                    name="username"
+                    id="username"
+                    type="text"
+                    placeholder="Username"
+                    className="welcome__form-input"
+                  />
+                </label>
+                <label htmlFor="password" className="welcome__form-label">
+                  Password
+                  <input
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    className="welcome__form-input"
+                  />
+                </label>
+                <label htmlFor="rememberme" className="welcome__checkbox-label">
                   <input
                     name="rememberme"
                     id="rememberme"
                     type="checkbox"
-                    className="welcome__rememberme-checkbox"
+                    className="welcome__checkbox-input"
                   />
-                  <span className="welcome__rememberme-custom-checkbox"></span>
-                  <span className="welcome__rememberme-custom-checkmark"></span>
-                  <span className="welcome__rememberme-text">Remember me</span>
+                  <span className="welcome__checkbox-box"></span>
+                  <span className="welcome__checkbox-checkmark"></span>
+                  <span className="welcome__checkbox-text">Remember me</span>
                 </label>
               </div>
 
               <button className="welcome__signup-btn">
-                <p className="welcome__signup-btn-text">Continue</p>
-                <img
-                  src="src\assets\RightArrow.svg"
-                  alt=""
-                  className="welcome__signup-arrow"
-                />
+                <p className="welcome__signup-btn-text">
+                  Continue
+                  <img
+                    src="src/assets/RightArrow.svg"
+                    alt=""
+                    className="welcome__signup-arrow"
+                  />
+                </p>
               </button>
             </form>
           )}
