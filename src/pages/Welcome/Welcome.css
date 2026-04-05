@@ -40,6 +40,7 @@
 .welcome__hero-text {
   max-width: 759px;
   margin-left: 106px;
+  margin-right: 20px;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -92,16 +93,23 @@
 }
 
 .welcome__panel {
-  min-height: 770px;
+  min-height: 80vh;
+  max-width: 650px;
   margin-right: 87px;
   color: rgba(255, 255, 255, 0.9);
   padding: 46px 84px 62px;
-  background-image: url("../../assets/LoginPanel.svg");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(
+    to right,
+    rgba(24, 241, 233, 0.05),
+    rgba(36, 208, 222, 0.05),
+    rgba(49, 145, 205, 0.05),
+    rgba(35, 132, 201, 0.05)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(24, 241, 233, 0.3);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   row-gap: 23px;
 }
@@ -111,9 +119,11 @@
   margin-bottom: 29px;
   font-size: 48px;
   color: rgba(255, 255, 255, 0.9);
+  text-align: center;
 }
 
 .welcome__form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -123,17 +133,20 @@
 }
 
 .welcome__inputs {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: flex-start;
   row-gap: 44px;
 }
 
 .welcome__form-label {
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
   font-size: 16px;
+  user-select: none;
 }
 
 .welcome__form-label:focus-within {
@@ -141,8 +154,9 @@
 }
 
 .welcome__form-input {
-  width: 630px;
-  padding: 16px 0 16px 19px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 19px 16px 19px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 255, 255, 0.1);
@@ -165,7 +179,8 @@
   align-items: center;
   column-gap: 10px;
   font-size: 16px;
-  width: 25%;
+  width: 150px;
+  user-select: none;
 }
 
 .welcome__checkbox-label:hover {
@@ -176,12 +191,12 @@
   display: none;
 }
 
-.welcome__checkbox-input:checked ~ .welcome__checkbox-custom-checkbox {
+.welcome__checkbox-input:checked ~ .welcome__checkbox-box {
   background-color: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.welcome__checkbox-input:checked ~ .welcome__checkbox-custom-checkmark {
+.welcome__checkbox-input:checked ~ .welcome__checkbox-checkmark {
   display: block;
 }
 
@@ -271,6 +286,7 @@
 }
 
 .welcome__signup-btn:hover {
+  cursor: pointer;
   border: 1px solid rgba(24, 241, 233, 0.8);
   background-position: 100%, 0;
   color: rgba(255, 255, 255, 0.9);
@@ -297,4 +313,44 @@
   right: -30px;
   top: 1px;
   transition: right 0.3s ease;
+}
+
+@media screen and (max-width: 1250px) {
+  .welcome__hero-text {
+    padding-bottom: 160px;
+  }
+  .welcome__title {
+    font-size: 48px;
+  }
+  .welcome__rotating-text {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .welcome {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .welcome__content {
+    position: static;
+    min-height: 100dvh;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 96px 16px 24px;
+    box-sizing: border-box;
+  }
+
+  .welcome__hero-text {
+    display: none;
+  }
+
+  .welcome__panel {
+    width: 100%;
+    max-width: 650px;
+    margin: 0;
+    padding: 32px 20px 40px;
+    box-sizing: border-box;
+  }
 }

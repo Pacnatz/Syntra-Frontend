@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import "./DynamicChart.css";
 
 function DynamicChart() {
   const canvasRef = useRef(null);
