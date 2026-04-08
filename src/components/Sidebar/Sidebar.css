@@ -171,6 +171,7 @@
   width: 64px;
   border-radius: 100%;
   margin-right: 18px;
+  user-select: none;
 }
 
 .sidebar__profile-name {
@@ -202,6 +203,6 @@
 .sidebar__profile-gear {
   width: 24px;
   height: 24px;
-
+  user-select: none;
   opacity: 0.9;
 }

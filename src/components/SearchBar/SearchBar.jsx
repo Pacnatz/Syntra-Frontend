@@ -7,7 +7,12 @@ function SearchBar() {
   };
   return (
     <form onSubmit={handleSubmit} className="searchbar">
-      <img src={SearchIcon} alt="Search Icon" className="searchbar__icon" />
+      <img
+        src={SearchIcon}
+        alt="Search Icon"
+        className="searchbar__icon"
+        draggable={false}
+      />
       <input
         id="search"
         type="text"

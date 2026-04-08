@@ -17,7 +17,12 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
-        <img src={Logo} alt="Logo" className="sidebar__logo-img" />
+        <img
+          src={Logo}
+          alt="Logo"
+          className="sidebar__logo-img"
+          draggable={false}
+        />
         <p className="sidebar__logo-text">Syntra</p>
       </div>
       <div className="sidebar__panel">
@@ -45,6 +50,7 @@ function Sidebar() {
                   src={TempImage}
                   alt="Friend Image"
                   className="sidebar__friend-img"
+                  draggable={false}
                 />
                 <p className="sidebar__list-item-text">Friend 1</p>
               </div>
@@ -54,6 +60,7 @@ function Sidebar() {
                     src={Message}
                     alt="Message Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
                 <button className="sidebar__list-icon-btn">
@@ -61,6 +68,7 @@ function Sidebar() {
                     src={Trash}
                     alt="Remove Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
               </div>
@@ -71,6 +79,7 @@ function Sidebar() {
                   src={TempImage}
                   alt="Friend Image"
                   className="sidebar__friend-img"
+                  draggable={false}
                 />
                 <p className="sidebar__list-item-text">Friend 2</p>
               </div>
@@ -80,6 +89,7 @@ function Sidebar() {
                     src={Message}
                     alt="Message Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
                 <button className="sidebar__list-icon-btn">
@@ -87,6 +97,7 @@ function Sidebar() {
                     src={Trash}
                     alt="Remove Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
               </div>
@@ -97,6 +108,7 @@ function Sidebar() {
                   src={TempImage}
                   alt="Friend Image"
                   className="sidebar__friend-img"
+                  draggable={false}
                 />
                 <p className="sidebar__list-item-text">Friend 3</p>
               </div>
@@ -106,6 +118,7 @@ function Sidebar() {
                     src={Message}
                     alt="Message Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
                 <button className="sidebar__list-icon-btn">
@@ -113,6 +126,7 @@ function Sidebar() {
                     src={Trash}
                     alt="Remove Friend"
                     className="sidebar__list-icon-img"
+                    draggable={false}
                   />
                 </button>
               </div>
@@ -122,7 +136,12 @@ function Sidebar() {
       </div>
       <div className="sidebar__profile-icons">
         <div className="sidebar__profile">
-          <img src={TempImage} alt="Profile" className="sidebar__profile-img" />
+          <img
+            src={TempImage}
+            alt="Profile"
+            className="sidebar__profile-img"
+            draggable={false}
+          />
           <p className="sidebar__profile-name">John Doe</p>
         </div>
         <button className="sidebar__profile-btn">
@@ -130,6 +149,7 @@ function Sidebar() {
             src={Gear}
             alt="Edit Profile Gear"
             className="sidebar__profile-gear"
+            draggable={false}
           />
         </button>
       </div>
