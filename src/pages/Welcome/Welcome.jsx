@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import Logo from "../../assets/Logo.svg";
+import RightArrow from "../../assets/RightArrow.svg";
 import DynamicChart from "../../components/DynamicChart/DynamicChart";
 import LoginToggle from "../../components/LoginToggle/LoginToggle";
 import "./Welcome.css";
 
 function Welcome() {
+  const navigate = useNavigate();
   const [signup, setSignup] = useState(true);
   const [rotationIndex, setRotationIndex] = useState(0);
 
@@ -15,31 +19,36 @@ function Welcome() {
   const handleRegistration = (e) => {
     e.preventDefault();
     // Handle registration logic here
+    navigate("/dashboard");
   };
 
   const handleSignin = (e) => {
     e.preventDefault();
     // Handle sign-in logic here
+    navigate("/dashboard");
   };
 
   useEffect(() => {
+    // Initial render
     const textRotationInterval = setInterval(() => {
       setRotationIndex((prevIndex) => {
         return prevIndex === 2 ? 0 : prevIndex + 1;
       });
     }, 3000); // Rotate text every 3 seconds
+
+    // Check the router's current path on initial load
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
+
     return () => clearInterval(textRotationInterval);
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="welcome">
       <DynamicChart />
-      <Link to="/test" className="welcome__logo">
-        <img
-          src="../src/assets/Logo.svg"
-          alt="Logo"
-          className="welcome__logo-img"
-        />
+      <Link to="/" className="welcome__logo">
+        <img src={Logo} alt="Logo" className="welcome__logo-img" />
         <p className="welcome__logo-text">Syntra</p>
       </Link>
       <div className="welcome__content">
@@ -149,7 +158,7 @@ function Welcome() {
                 <p className="welcome__signup-btn-text">
                   Get Started
                   <img
-                    src="src/assets/RightArrow.svg"
+                    src={RightArrow}
                     alt=""
                     className="welcome__signup-arrow"
                   />
@@ -191,7 +200,6 @@ function Welcome() {
                   <span className="welcome__checkbox-text">Remember me</span>
                 </label>
               </div>
-
               <button className="welcome__signup-btn">
                 <p className="welcome__signup-btn-text">
                   Continue
