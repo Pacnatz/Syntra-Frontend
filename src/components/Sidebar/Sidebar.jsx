@@ -23,7 +23,7 @@ function Sidebar() {
           className="sidebar__logo-img"
           draggable={false}
         />
-        <p className="sidebar__logo-text">Syntra</p>
+        <h1 className="sidebar__logo-text">Syntra</h1>
       </div>
       <div className="sidebar__panel">
         <WatchlistToggle handleToggle={handleToggle} />

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import Profile from "../Profile/Profile";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import "./Dashboard.css";
@@ -13,18 +14,7 @@ function Dashboard() {
         <div className="dashboard__panel">
           <Routes>
             {/* This is a placeholder route.*/}
-            <Route
-              path="test"
-              element={
-                <div>
-                  <h1>Dashboard</h1>
-                  <p>
-                    Welcome to your dashboard! Here you can manage your
-                    portfolio and connect with friends.
-                  </p>
-                </div>
-              }
-            />
+            <Route path="/" element={<Profile />} />
           </Routes>
         </div>
       </div>

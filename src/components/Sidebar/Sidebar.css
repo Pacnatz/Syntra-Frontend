@@ -183,16 +183,21 @@
 }
 
 .sidebar__profile-btn {
+  height: 36px;
+  width: 36px;
   padding: 0;
   background: transparent;
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar__profile-btn:hover {
   cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .sidebar__profile-btn:hover .sidebar__profile-gear {
