@@ -1,59 +1,38 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import SearchContext from "../../context/SearchContext";
 import SearchIcon from "../../assets/SearchIcon.svg";
 import "./SearchBar.css";
 
-function SearchBar() {
+function SearchBar({ setSearchLoading }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setSearchResult, setSearchLoading } = useContext(SearchContext);
 
   const [previousPath, setPreviousPath] = useState(location.pathname);
   const debounceTimeoutRef = useRef(null);
-  const debounceDelay = 1000; // Delay in milliseconds
+  const debounceDelay = 300; // Delay in milliseconds
 
   const onChange = (e) => {
     const query = e.target.value;
     if (query.length < 2) {
       // Go back to previous route
       clearTimeout(debounceTimeoutRef.current);
-      setTimeout(() => {
-        setSearchLoading(false);
-      }, 20); // Small delay before setting switching back to previousPath
+      setTimeout(() => {}, 20); // Small delay before setting switching back to previousPath
       navigate(previousPath);
       return;
     }
-    setSearchLoading(true);
-
-    // Update the URL with the search query as a parameter (Purely cosmetic)
-    navigate("/dashboard/search?q=" + encodeURIComponent(query.trim()), {
-      replace: true,
-    });
-    // If our path isn't already dashboard/search/
-    location.pathname !== "/dashboard/search"
-      ? setPreviousPath(location.pathname) // This will set previous path on the 2nd character input
-      : null;
-
     // Debounce the search input to avoid excessive API calls
     clearTimeout(debounceTimeoutRef.current);
     debounceTimeoutRef.current = setTimeout(() => {
-      fetch(
-        "http://localhost:3001/search?q=" + encodeURIComponent(query.trim()),
-      )
-        .then((res) =>
-          res.ok ? res.json() : Promise.reject({ status: res.status }),
-        )
-        .then((data) => {
-          setSearchResult(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching from server:", error);
-        })
-        .finally(() => {
-          setSearchLoading(false);
-        });
+      // Update the URL with the search query as a parameter
+      navigate("/dashboard/search?q=" + encodeURIComponent(query.trim()), {
+        replace: true,
+      });
+      // If our path isn't already dashboard/search/
+      location.pathname !== "/dashboard/search"
+        ? setPreviousPath(location.pathname) // This will set previous path on the 2nd character input
+        : null;
+      setSearchLoading(true);
     }, debounceDelay);
   };
 

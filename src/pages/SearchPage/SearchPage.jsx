@@ -1,13 +1,38 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import StockCard from "../../components/StockCard/StockCard";
-import SearchContext from "../../context/SearchContext";
 import Loader from "../../assets/Loader.svg";
 import "./SearchPage.css";
 
-function SearchPage() {
-  const { searchResult, searchLoading } = useContext(SearchContext);
-  console.log("Search Result:", searchResult);
+function SearchPage({ searchLoading, setSearchLoading }) {
+  const [searchParams] = useSearchParams();
+  const [searchResult, setSearchResult] = useState([]);
+  const query = searchParams.get("q") || "";
+
+  // Fetch search results whenever the query changes
+  useEffect(() => {
+    if (query.length < 2) {
+      setSearchLoading(false);
+      return;
+    }
+    fetch("http://localhost:3001/search?q=" + encodeURIComponent(query.trim()))
+      .then((res) =>
+        res.ok ? res.json() : Promise.reject({ status: res.status }),
+      )
+      .then((data) => {
+        setSearchResult(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching from server:", error);
+      })
+      .finally(() => {
+        setSearchLoading(false);
+        console.log("done");
+      });
+  }, [query, setSearchLoading]);
+
   return (
     <>
       {searchLoading ? (
@@ -22,7 +47,7 @@ function SearchPage() {
               <ul className="searchpage__stock-search">
                 {searchResult.map((stock) => (
                   <StockCard
-                    key={stock.symbol}
+                    key={stock.description}
                     symbol={stock.symbol}
                     description={stock.description}
                   />

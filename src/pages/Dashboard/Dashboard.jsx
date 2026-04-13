@@ -6,31 +6,33 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Profile from "../Profile/Profile";
 import SearchPage from "../SearchPage/SearchPage";
 import StockPage from "../StockPage/StockPage";
-import SearchContext from "../../context/SearchContext";
 import "./Dashboard.css";
 
 function Dashboard() {
-  const [searchResult, setSearchResult] = useState([]);
   const [searchLoading, setSearchLoading] = useState(false);
   return (
-    <SearchContext.Provider
-      value={{ searchResult, setSearchResult, searchLoading, setSearchLoading }}
-    >
-      <div className="dashboard">
-        <Sidebar />
-        <div className="dashboard__content">
-          <SearchBar />
-          <div className="dashboard__panel">
-            <Routes>
-              {/* This is a placeholder route.*/}
-              <Route path="/" element={<Profile />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path={"/stock/:symbol"} element={<StockPage />} />
-            </Routes>
-          </div>
+    <div className="dashboard">
+      <Sidebar />
+      <div className="dashboard__content">
+        <SearchBar setSearchLoading={setSearchLoading} />
+        <div className="dashboard__panel">
+          <Routes>
+            {/* This is a placeholder route.*/}
+            <Route path="/" element={<Profile />} />
+            <Route
+              path="/search"
+              element={
+                <SearchPage
+                  searchLoading={searchLoading}
+                  setSearchLoading={setSearchLoading}
+                />
+              }
+            />
+            <Route path={"/stock/:symbol"} element={<StockPage />} />
+          </Routes>
         </div>
       </div>
-    </SearchContext.Provider>
+    </div>
   );
 }
 
