@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
+import Sidebar from "../../components/Sidebar/Sidebar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import Profile from "../Profile/Profile";
 import SearchPage from "../SearchPage/SearchPage";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import StockPage from "../StockPage/StockPage";
 import SearchContext from "../../context/SearchContext";
 import "./Dashboard.css";
 
@@ -24,6 +25,7 @@ function Dashboard() {
               {/* This is a placeholder route.*/}
               <Route path="/" element={<Profile />} />
               <Route path="/search" element={<SearchPage />} />
+              <Route path={"/stock/:symbol"} element={<StockPage />} />
             </Routes>
           </div>
         </div>
