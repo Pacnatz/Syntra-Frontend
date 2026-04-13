@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import SearchContext from "../../context/SearchContext";
 import SearchIcon from "../../assets/SearchIcon.svg";
 import "./SearchBar.css";
 
 function SearchBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { setSearchResult, setSearchLoading } = useContext(SearchContext);
 
   const [previousPath, setPreviousPath] = useState(location.pathname);
   const debounceTimeoutRef = useRef(null);
@@ -19,8 +21,9 @@ function SearchBar() {
       navigate(previousPath);
       return;
     }
+    setSearchLoading(true);
 
-    // Update the URL with the search query as a parameter
+    // Update the URL with the search query as a parameter (Purely cosmetic)
     navigate("/dashboard/search?q=" + encodeURIComponent(query.trim()), {
       replace: true,
     });
@@ -35,12 +38,17 @@ function SearchBar() {
       fetch(
         "http://localhost:3001/search?q=" + encodeURIComponent(query.trim()),
       )
-        .then((res) => res.json())
+        .then((res) =>
+          res.ok ? res.json() : Promise.reject({ status: res.status }),
+        )
         .then((data) => {
-          console.log(data);
+          setSearchResult(data);
         })
         .catch((error) => {
           console.error("Error fetching from server:", error);
+        })
+        .finally(() => {
+          setSearchLoading(false);
         });
     }, debounceDelay);
   };

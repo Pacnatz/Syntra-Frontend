@@ -1,24 +1,34 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Profile from "../Profile/Profile";
+import SearchPage from "../SearchPage/SearchPage";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import SearchContext from "../../context/SearchContext";
 import "./Dashboard.css";
 
 function Dashboard() {
+  const [searchResult, setSearchResult] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
   return (
-    <div className="dashboard">
-      <Sidebar />
-      <div className="dashboard__content">
-        <SearchBar />
-        <div className="dashboard__panel">
-          <Routes>
-            {/* This is a placeholder route.*/}
-            <Route path="/" element={<Profile />} />
-          </Routes>
+    <SearchContext.Provider
+      value={{ searchResult, setSearchResult, searchLoading, setSearchLoading }}
+    >
+      <div className="dashboard">
+        <Sidebar />
+        <div className="dashboard__content">
+          <SearchBar />
+          <div className="dashboard__panel">
+            <Routes>
+              {/* This is a placeholder route.*/}
+              <Route path="/" element={<Profile />} />
+              <Route path="/search" element={<SearchPage />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
+    </SearchContext.Provider>
   );
 }
 
