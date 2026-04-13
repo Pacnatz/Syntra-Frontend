@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import StockCard from "../../components/StockCard/StockCard";
 import SearchContext from "../../context/SearchContext";
+import Loader from "../../assets/Loader.svg";
 import "./SearchPage.css";
 
 function SearchPage() {
@@ -10,7 +11,9 @@ function SearchPage() {
   return (
     <>
       {searchLoading ? (
-        <p>Loading...</p>
+        <div className="searchpage__screen">
+          <img src={Loader} alt="Loading..." className="searchpage__loader" />
+        </div>
       ) : (
         <div className="searchpage">
           <div className="searchpage__content">
