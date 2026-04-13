@@ -22,14 +22,12 @@ function SearchPage({ searchLoading, setSearchLoading }) {
       )
       .then((data) => {
         setSearchResult(data);
-        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching from server:", error);
       })
       .finally(() => {
         setSearchLoading(false);
-        console.log("done");
       });
   }, [query, setSearchLoading]);
 

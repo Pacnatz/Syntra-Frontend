@@ -57,6 +57,7 @@ function SearchBar({ setSearchLoading }) {
         aria-label="Search"
         placeholder="Search..."
         className="searchbar__input"
+        maxLength={20}
         onChange={onChange}
       />
     </form>
