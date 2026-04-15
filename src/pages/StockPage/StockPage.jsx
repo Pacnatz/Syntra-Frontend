@@ -11,13 +11,31 @@ import StarFilled from "../../assets/StarFilled.svg";
 import StarEmpty from "../../assets/StarEmpty.svg";
 import "./StockPage.css";
 
-function StockPage() {
+function StockPage({ setWatchlist }) {
   const { symbol } = useParams();
   const chartContainerRef = useRef(null);
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const isDaily = graphInterval === "1day";
+
+  // Temp Watchlist handler, will be improved when we have a database
+  const handleWatchlistToggle = () => {
+    setIsInWatchlist((prev) => !prev);
+    setWatchlist((prev) => {
+      // If theres a match in the watchlist
+      if (prev.filter((item) => item.symbol === symbol).length > 0) {
+        // Remove the match
+        return prev.filter((item) => item.symbol !== symbol);
+      } else {
+        // Otherwise, add the stock to the watchlist with its latest price
+        return [
+          ...prev,
+          { symbol: symbol, price: candles[candles.length - 1]?.close || 0 },
+        ];
+      }
+    });
+  };
 
   // This function can be improved by using the user's local timezone or a setting, but for simplicity we'll just shift back 6 hours to align with central time
   function parseCandleTime(datetime) {
@@ -193,7 +211,7 @@ function StockPage() {
           </button>
         </nav>
         <button
-          onClick={() => setIsInWatchlist(!isInWatchlist)}
+          onClick={handleWatchlistToggle}
           className="stockpage__watchlist-btn"
         >
           <img

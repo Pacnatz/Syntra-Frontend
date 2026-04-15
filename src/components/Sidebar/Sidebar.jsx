@@ -1,14 +1,15 @@
 import { useState } from "react";
 
+import WatchlistToggle from "../Toggle/WatchlistToggle";
+import WatchlistCard from "../WatchlistCard/WatchlistCard";
 import TempImage from "../../assets/TempImage.svg";
 import Message from "../../assets/Message.svg";
 import Trash from "../../assets/Trash.svg";
 import Gear from "../../assets/Gear.svg";
-import WatchlistToggle from "../Toggle/WatchlistToggle";
 import Logo from "../../assets/Logo.svg";
 import "./Sidebar.css";
 
-function Sidebar() {
+function Sidebar({ watchlist }) {
   const [watchlistEnabled, setWatchlistEnabled] = useState(true);
 
   const handleToggle = () => {
@@ -29,7 +30,10 @@ function Sidebar() {
         <WatchlistToggle handleToggle={handleToggle} />
         {watchlistEnabled ? (
           <ul className="sidebar__list">
-            <li className="sidebar__list-item">
+            {watchlist.map((stock) => (
+              <WatchlistCard key={stock.symbol} stock={stock} />
+            ))}
+            {/* <li className="sidebar__list-item">
               <p className="sidebar__list-item-text">AAPL</p>
               <p className="sidebar__list-item-text">$258.89</p>
             </li>
@@ -40,7 +44,7 @@ function Sidebar() {
             <li className="sidebar__list-item">
               <p className="sidebar__list-item-text">MSFT</p>
               <p className="sidebar__list-item-text">$373.55</p>
-            </li>
+            </li> */}
           </ul>
         ) : (
           <ul className="sidebar__list">

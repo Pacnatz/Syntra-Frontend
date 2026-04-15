@@ -10,9 +10,10 @@ import "./Dashboard.css";
 
 function Dashboard() {
   const [searchLoading, setSearchLoading] = useState(false);
+  const [watchlist, setWatchlist] = useState([]);
   return (
     <div className="dashboard">
-      <Sidebar />
+      <Sidebar watchlist={watchlist} />
       <div className="dashboard__content">
         <SearchBar setSearchLoading={setSearchLoading} />
         <div className="dashboard__panel">
@@ -28,7 +29,10 @@ function Dashboard() {
                 />
               }
             />
-            <Route path={"/stock/:symbol"} element={<StockPage />} />
+            <Route
+              path={"/stock/:symbol"}
+              element={<StockPage setWatchlist={setWatchlist} />}
+            />
           </Routes>
         </div>
       </div>
