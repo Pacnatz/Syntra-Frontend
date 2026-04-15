@@ -17,7 +17,6 @@ function SearchBar({ setSearchLoading }) {
     if (query.length < 2) {
       // Go back to previous route
       clearTimeout(debounceTimeoutRef.current);
-      setTimeout(() => {}, 20); // Small delay before setting switching back to previousPath
       navigate(previousPath);
       return;
     }

@@ -2,9 +2,8 @@
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  max-width: 420px;
-  min-width: 210px;
-  width: 100%;
+  flex: 0 1 clamp(210px, 28vw, 420px);
+  width: clamp(210px, 28vw, 420px);
   height: 100%;
   padding: 28px 30px;
   display: flex;
