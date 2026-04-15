@@ -1,5 +1,10 @@
 import { useRef, useEffect, useState } from "react";
-import { createChart, ColorType, CandlestickSeries } from "lightweight-charts";
+import {
+  createChart,
+  ColorType,
+  CandlestickSeries,
+  createTextWatermark,
+} from "lightweight-charts";
 import { useParams } from "react-router-dom";
 
 import StarFilled from "../../assets/StarFilled.svg";
@@ -26,7 +31,9 @@ function StockPage() {
       .then((res) => {
         return res.ok ? res.json() : Promise.reject(res.status);
       })
-      .then((data) => {
+      .then((datas) => {
+        const { data, log } = datas; // Destructure the response to get the actual data and log
+        console.log(log);
         setCandles(
           data.values
             .map((candle) => ({
@@ -116,6 +123,20 @@ function StockPage() {
     const newSeries = chart.addSeries(CandlestickSeries, seriesOptions);
     newSeries.setData(candles);
 
+    createTextWatermark(chart.panes()[0], {
+      horzAlign: "left",
+      vertAlign: "top",
+      lines: [
+        {
+          text: symbol.toUpperCase(),
+          color: "rgba(255, 255, 255, 0.1)",
+          fontFamily: "Inter, Arial, Helvetica, sans-serif",
+          fontStyle: "bold",
+          fontSize: 48,
+        },
+      ],
+    });
+
     const handleResize = () => {
       chart.applyOptions({
         width: chartContainerRef.current.clientWidth,
@@ -129,7 +150,7 @@ function StockPage() {
 
       chart.remove();
     };
-  }, [candles, isDaily]);
+  }, [candles, isDaily, symbol]);
 
   return (
     <div className="stockpage">
