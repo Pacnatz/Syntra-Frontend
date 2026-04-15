@@ -1,14 +1,18 @@
 import { useRef, useEffect, useState } from "react";
 import { createChart, ColorType, CandlestickSeries } from "lightweight-charts";
 import { useParams } from "react-router-dom";
+
+import StarFilled from "../../assets/StarFilled.svg";
+import StarEmpty from "../../assets/StarEmpty.svg";
 import "./StockPage.css";
 
 function StockPage() {
   const { symbol } = useParams();
   const chartContainerRef = useRef(null);
   const [candles, setCandles] = useState([]);
-  const interval = "1h";
-  const isDaily = interval === "1day";
+  const [graphInterval, setGraphInterval] = useState("1day");
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const isDaily = graphInterval === "1day";
 
   // This function can be improved by using the user's local timezone or a setting, but for simplicity we'll just shift back 6 hours to align with central time
   function parseCandleTime(datetime) {
@@ -18,7 +22,7 @@ function StockPage() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3001/stock/${symbol}/${interval}`)
+    fetch(`http://localhost:3001/stock/${symbol}/${graphInterval}`)
       .then((res) => {
         return res.ok ? res.json() : Promise.reject(res.status);
       })
@@ -38,7 +42,7 @@ function StockPage() {
       .catch((error) => {
         console.error("Error fetching stock data:", error);
       });
-  }, [symbol, interval]);
+  }, [symbol, graphInterval]);
 
   useEffect(() => {
     const container = chartContainerRef.current;
@@ -129,7 +133,55 @@ function StockPage() {
 
   return (
     <div className="stockpage">
-      <div className="stockpage__header">{symbol}</div>
+      <div className="stockpage__header">
+        <nav
+          aria-label="Interval Navigation"
+          className="stockpage__interval-nav"
+        >
+          <button
+            type="button"
+            aria-pressed={graphInterval === "1min"}
+            onClick={() => setGraphInterval("1min")}
+            className="stockpage__interval-btn"
+          >
+            1M
+          </button>
+          <button
+            type="button"
+            aria-pressed={graphInterval === "5min"}
+            onClick={() => setGraphInterval("5min")}
+            className="stockpage__interval-btn"
+          >
+            5M
+          </button>
+          <button
+            type="button"
+            aria-pressed={graphInterval === "1h"}
+            onClick={() => setGraphInterval("1h")}
+            className="stockpage__interval-btn"
+          >
+            1H
+          </button>
+          <button
+            type="button"
+            aria-pressed={graphInterval === "1day"}
+            onClick={() => setGraphInterval("1day")}
+            className="stockpage__interval-btn"
+          >
+            1D
+          </button>
+        </nav>
+        <button
+          onClick={() => setIsInWatchlist(!isInWatchlist)}
+          className="stockpage__watchlist-btn"
+        >
+          <img
+            src={isInWatchlist ? StarFilled : StarEmpty}
+            alt="Watchlist Star"
+            className="stockpage__watchlist-star"
+          />
+        </button>
+      </div>
       <div className="stockpage__graph" ref={chartContainerRef}></div>
     </div>
   );
