@@ -21,19 +21,13 @@ function StockPage({ setWatchlist }) {
   const isDaily = graphInterval === "1day";
 
   const { socketRef } = useContext(SocketContext);
-  useEffect(() => {
-    const socket = socketRef.current;
-    if (!socket || !symbol) return;
-    socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
 
-    socket.on("stockPriceUpdate", (update) => {
-      console.log(update);
-    });
-
-    return () => {
-      socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
-    };
-  }, [symbol, socketRef]);
+  // Return Twelve Data's datetime to a UNIX timestamp in seconds
+  function adjustCandleTime(datetime) {
+    // For some reason Twelve Data's datetime seems to be off by 1 hour compared to Finnhub's timestamps,
+    // so we need subtract 3600 seconds to match the timestamps from the stock price updates
+    return Math.floor(new Date(datetime).getTime() / 1000) - 3600;
+  }
 
   // Temp Watchlist handler, will be improved when we have a database
   const handleWatchlistToggle = () => {
@@ -53,12 +47,61 @@ function StockPage({ setWatchlist }) {
     });
   };
 
-  // This function can be improved by using the user's local timezone or a setting, but for simplicity we'll just shift back 6 hours to align with central time
-  function parseCandleTime(datetime) {
-    const date = new Date(datetime);
-    date.setHours(date.getHours() - 6); // Shift back 6 hours to align with central time
-    return Math.floor(date.getTime() / 1000);
-  }
+  useEffect(() => {
+    const socket = socketRef.current;
+    if (!socket || !symbol) return;
+    socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
+
+    const handleStockPriceUpdate = (update) => {
+      if (update.symbol === symbol.toUpperCase()) {
+        setCandles((prevCandles) => {
+          const lastCandle = prevCandles[prevCandles.length - 1];
+          const intervalSeconds =
+            graphInterval === "1min"
+              ? 60
+              : graphInterval === "5min"
+                ? 300
+                : graphInterval === "1h"
+                  ? 3600
+                  : 86400;
+          // update.time is from Finnhub's api and the UNIX timestamp seems to be different from the one from Twelve Data by 1 hour, so we add 3600 seconds to it to match the candles time
+          const updateTime = Math.floor(update.time / 1000);
+          console.log(lastCandle?.time);
+          console.log(updateTime);
+
+          if (updateTime > lastCandle.time + intervalSeconds) {
+            // Add a new candle if the update time exceeds the current candle's time by the interval
+            return [
+              ...prevCandles,
+              {
+                time: lastCandle.time + intervalSeconds, // Make a new candle with the next interval time
+                open: update.price,
+                high: update.price,
+                low: update.price,
+                close: update.price,
+              },
+            ];
+          } else {
+            // Update the current candle
+            const updatedCandle = {
+              ...lastCandle,
+              high: Math.max(lastCandle.high, update.price),
+              low: Math.min(lastCandle.low, update.price),
+              close: update.price,
+            };
+            return [...prevCandles.slice(0, -1), updatedCandle];
+          }
+        });
+      }
+    };
+
+    socket.on("stockPriceUpdate", handleStockPriceUpdate);
+
+    return () => {
+      socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
+      socket.off("stockPriceUpdate", handleStockPriceUpdate);
+    };
+  }, [symbol, socketRef, graphInterval]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/stock/${symbol}/${graphInterval}`)
@@ -71,7 +114,7 @@ function StockPage({ setWatchlist }) {
         setCandles(
           data.values
             .map((candle) => ({
-              time: parseCandleTime(candle.datetime),
+              time: adjustCandleTime(candle.datetime),
               open: parseFloat(candle.open),
               high: parseFloat(candle.high),
               low: parseFloat(candle.low),
@@ -99,14 +142,14 @@ function StockPage({ setWatchlist }) {
           const date = new Date(time * 1000);
           if (isDaily) {
             return date.toLocaleDateString("en-US", {
-              timeZone: "UTC",
+              //timeZone: chartTimeZone, // Affects how a UNIX timestamp is displayed
               month: "short",
               day: "numeric",
             });
           }
 
           return date.toLocaleTimeString("en-US", {
-            timeZone: "UTC",
+            //timeZone: chartTimeZone, // Affects how a UNIX timestamp is displayed
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
@@ -116,17 +159,15 @@ function StockPage({ setWatchlist }) {
       timeScale: {
         timeVisible: !isDaily,
         tickMarkFormatter: (time, tickMarkType) => {
-          // tickMarkType: 0 = start of year, 1 = start of month, 2 = start of day, 3 = time
+          // tickMarkType: 0 = start of year, 1 = start of month, 2 = start of day, 3 = start of hour, 4 = start of minute
           const date = new Date(time * 1000);
           if (tickMarkType <= 2) {
             return date.toLocaleDateString("en-US", {
-              timeZone: "UTC",
               month: "short",
               day: "numeric",
             });
           }
           return date.toLocaleTimeString("en-US", {
-            timeZone: "UTC",
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
