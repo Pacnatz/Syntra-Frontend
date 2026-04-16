@@ -65,7 +65,6 @@ function StockPage({ setWatchlist }) {
                 : graphInterval === "1h"
                   ? 3600
                   : 86400;
-          // update.time is from Finnhub's api and the UNIX timestamp seems to be different from the one from Twelve Data by 1 hour, so we add 3600 seconds to it to match the candles time
           const updateTime = Math.floor(update.time / 1000);
           console.log(lastCandle?.time);
           console.log(updateTime);
@@ -110,8 +109,8 @@ function StockPage({ setWatchlist }) {
         return res.ok ? res.json() : Promise.reject(res.status);
       })
       .then((datas) => {
-        const { data, log } = datas; // Destructure the response to get the actual data and log
-        console.log(log);
+        const { data, log: stockCache } = datas; // Destructure the response to get the actual data and log
+        console.log(stockCache); // Log the cache state for debugging
         setCandles(
           data.values
             .map((candle) => ({
