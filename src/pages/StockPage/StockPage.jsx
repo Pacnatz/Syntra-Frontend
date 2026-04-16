@@ -15,6 +15,7 @@ import "./StockPage.css";
 function StockPage({ setWatchlist }) {
   const { symbol } = useParams();
   const chartContainerRef = useRef(null);
+  const seriesRef = useRef(null);
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
   const [isInWatchlist, setIsInWatchlist] = useState(false);
@@ -142,14 +143,12 @@ function StockPage({ setWatchlist }) {
           const date = new Date(time * 1000);
           if (isDaily) {
             return date.toLocaleDateString("en-US", {
-              //timeZone: chartTimeZone, // Affects how a UNIX timestamp is displayed
               month: "short",
               day: "numeric",
             });
           }
 
           return date.toLocaleTimeString("en-US", {
-            //timeZone: chartTimeZone, // Affects how a UNIX timestamp is displayed
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
@@ -195,8 +194,7 @@ function StockPage({ setWatchlist }) {
     };
 
     const chart = createChart(container, containerOptions);
-    const newSeries = chart.addSeries(CandlestickSeries, seriesOptions);
-    newSeries.setData(candles);
+    seriesRef.current = chart.addSeries(CandlestickSeries, seriesOptions);
 
     createTextWatermark(chart.panes()[0], {
       horzAlign: "left",
@@ -222,10 +220,16 @@ function StockPage({ setWatchlist }) {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-
+      seriesRef.current = null; // Delete the series whenever the symbol or interval changes
       chart.remove();
     };
-  }, [candles, isDaily, symbol]);
+  }, [isDaily, symbol]);
+
+  useEffect(() => {
+    if (seriesRef.current) {
+      seriesRef.current.setData(candles);
+    }
+  }, [candles]);
 
   return (
     <div className="stockpage">
