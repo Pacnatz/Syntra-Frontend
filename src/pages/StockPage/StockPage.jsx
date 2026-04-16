@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import {
   createChart,
   ColorType,
@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 import StarFilled from "../../assets/StarFilled.svg";
 import StarEmpty from "../../assets/StarEmpty.svg";
+import { SocketContext } from "../../context/SocketContext";
 import "./StockPage.css";
 
 function StockPage({ setWatchlist }) {
@@ -18,6 +19,21 @@ function StockPage({ setWatchlist }) {
   const [graphInterval, setGraphInterval] = useState("1day");
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const isDaily = graphInterval === "1day";
+
+  const { socketRef } = useContext(SocketContext);
+  useEffect(() => {
+    const socket = socketRef.current;
+    if (!socket || !symbol) return;
+    socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
+
+    socket.on("stockPriceUpdate", (update) => {
+      console.log(update);
+    });
+
+    return () => {
+      socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
+    };
+  }, [symbol, socketRef]);
 
   // Temp Watchlist handler, will be improved when we have a database
   const handleWatchlistToggle = () => {
