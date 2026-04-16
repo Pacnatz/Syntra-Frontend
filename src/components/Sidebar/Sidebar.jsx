@@ -31,20 +31,8 @@ function Sidebar({ watchlist }) {
         {watchlistEnabled ? (
           <ul className="sidebar__list">
             {watchlist.map((stock) => (
-              <WatchlistCard key={stock.symbol} stock={stock} />
+              <WatchlistCard key={stock.description} stock={stock} />
             ))}
-            {/* <li className="sidebar__list-item">
-              <p className="sidebar__list-item-text">AAPL</p>
-              <p className="sidebar__list-item-text">$258.89</p>
-            </li>
-            <li className="sidebar__list-item">
-              <p className="sidebar__list-item-text">GOOGL</p>
-              <p className="sidebar__list-item-text">$314.75</p>
-            </li>
-            <li className="sidebar__list-item">
-              <p className="sidebar__list-item-text">MSFT</p>
-              <p className="sidebar__list-item-text">$373.55</p>
-            </li> */}
           </ul>
         ) : (
           <ul className="sidebar__list">

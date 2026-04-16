@@ -10,18 +10,19 @@ import { useParams } from "react-router-dom";
 import StarFilled from "../../assets/StarFilled.svg";
 import StarEmpty from "../../assets/StarEmpty.svg";
 import { SocketContext } from "../../context/SocketContext";
+import { CurrentStockContext } from "../../context/CurrentStockContext";
 import "./StockPage.css";
 
-function StockPage({ setWatchlist }) {
+function StockPage({ watchlist, setWatchlist }) {
   const { symbol } = useParams();
   const chartContainerRef = useRef(null);
   const seriesRef = useRef(null);
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
-  const [isInWatchlist, setIsInWatchlist] = useState(false);
   const isDaily = graphInterval === "1day";
 
   const { socketRef } = useContext(SocketContext);
+  const { currentStockDescription } = useContext(CurrentStockContext);
 
   // Return Twelve Data's datetime to a UNIX timestamp in seconds
   function adjustCandleTime(datetime) {
@@ -32,21 +33,32 @@ function StockPage({ setWatchlist }) {
 
   // Temp Watchlist handler, will be improved when we have a database
   const handleWatchlistToggle = () => {
-    setIsInWatchlist((prev) => !prev);
     setWatchlist((prev) => {
       // If theres a match in the watchlist
-      if (prev.filter((item) => item.symbol === symbol).length > 0) {
+      if (
+        prev.filter((item) => item.description === currentStockDescription)
+          .length > 0
+      ) {
         // Remove the match
-        return prev.filter((item) => item.symbol !== symbol);
+        return prev.filter(
+          (item) => item.description !== currentStockDescription,
+        );
       } else {
         // Otherwise, add the stock to the watchlist with its latest price
         return [
           ...prev,
-          { symbol: symbol, price: candles[candles.length - 1]?.close || 0 },
+          {
+            symbol: symbol,
+            description: currentStockDescription,
+          },
         ];
       }
     });
   };
+
+  const isInWatchlist = watchlist.some(
+    (item) => item.description === currentStockDescription,
+  );
 
   useEffect(() => {
     const socket = socketRef.current;

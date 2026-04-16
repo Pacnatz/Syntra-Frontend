@@ -1,14 +1,20 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CurrentStockContext } from "../../context/CurrentStockContext";
 
 import "./StockCard.css";
 
 function StockCard({ symbol, description }) {
   const navigate = useNavigate();
+  const { setCurrentStock, setCurrentStockDescription } =
+    useContext(CurrentStockContext);
   return (
     <li>
       <button
         onClick={() => {
           navigate(`/dashboard/stock/${symbol}`);
+          setCurrentStock(symbol);
+          setCurrentStockDescription(description);
         }}
         className="stock-card"
       >

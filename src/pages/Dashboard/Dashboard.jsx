@@ -7,6 +7,7 @@ import Profile from "../Profile/Profile";
 import SearchPage from "../SearchPage/SearchPage";
 import StockPage from "../StockPage/StockPage";
 import { SocketProvider } from "../../context/SocketContext";
+import { CurrentStockProvider } from "../../context/CurrentStockContext";
 import "./Dashboard.css";
 
 function Dashboard() {
@@ -14,31 +15,38 @@ function Dashboard() {
   const [watchlist, setWatchlist] = useState([]);
   return (
     <SocketProvider>
-      <div className="dashboard">
-        <Sidebar watchlist={watchlist} />
-        <div className="dashboard__content">
-          <SearchBar setSearchLoading={setSearchLoading} />
-          <div className="dashboard__panel">
-            <Routes>
-              {/* This is a placeholder route.*/}
-              <Route path="/" element={<Profile />} />
-              <Route
-                path="/search"
-                element={
-                  <SearchPage
-                    searchLoading={searchLoading}
-                    setSearchLoading={setSearchLoading}
-                  />
-                }
-              />
-              <Route
-                path={"/stock/:symbol"}
-                element={<StockPage setWatchlist={setWatchlist} />}
-              />
-            </Routes>
+      <CurrentStockProvider>
+        <div className="dashboard">
+          <Sidebar watchlist={watchlist} />
+          <div className="dashboard__content">
+            <SearchBar setSearchLoading={setSearchLoading} />
+            <div className="dashboard__panel">
+              <Routes>
+                {/* This is a placeholder route.*/}
+                <Route path="/" element={<Profile />} />
+                <Route
+                  path="/search"
+                  element={
+                    <SearchPage
+                      searchLoading={searchLoading}
+                      setSearchLoading={setSearchLoading}
+                    />
+                  }
+                />
+                <Route
+                  path={"/stock/:symbol"}
+                  element={
+                    <StockPage
+                      watchlist={watchlist}
+                      setWatchlist={setWatchlist}
+                    />
+                  }
+                />
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
+      </CurrentStockProvider>
     </SocketProvider>
   );
 }
