@@ -50,6 +50,7 @@ function StockPage({ watchlist, setWatchlist }) {
           {
             symbol: symbol,
             description: currentStockDescription,
+            price: candles.length > 0 ? candles[candles.length - 1].close : 0,
           },
         ];
       }
@@ -81,7 +82,7 @@ function StockPage({ watchlist, setWatchlist }) {
           console.log(lastCandle?.time);
           console.log(updateTime);
 
-          if (updateTime > lastCandle.time + intervalSeconds) {
+          if (updateTime > lastCandle?.time + intervalSeconds) {
             // Add a new candle if the update time exceeds the current candle's time by the interval
             return [
               ...prevCandles,
@@ -110,10 +111,13 @@ function StockPage({ watchlist, setWatchlist }) {
     socket.on("stockPriceUpdate", handleStockPriceUpdate);
 
     return () => {
-      socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
+      // If not on the watchlist leave the room when the component unmounts
+      if (!isInWatchlist) {
+        socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
+      }
       socket.off("stockPriceUpdate", handleStockPriceUpdate);
     };
-  }, [symbol, socketRef, graphInterval]);
+  }, [symbol, socketRef, graphInterval, isInWatchlist]);
 
   useEffect(() => {
     fetch(`http://localhost:3001/stock/${symbol}/${graphInterval}`)

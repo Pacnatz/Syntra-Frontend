@@ -22,7 +22,7 @@ function Dashboard() {
             <SearchBar setSearchLoading={setSearchLoading} />
             <div className="dashboard__panel">
               <Routes>
-                {/* This is a placeholder route.*/}
+                {/* These are the panel routes*/}
                 <Route path="/" element={<Profile />} />
                 <Route
                   path="/search"
