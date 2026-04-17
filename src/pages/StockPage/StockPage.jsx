@@ -24,6 +24,8 @@ function StockPage({ watchlist, setWatchlist }) {
   const { socketRef } = useContext(SocketContext);
   const { currentStockDescription } = useContext(CurrentStockContext);
 
+  const prevSymbolRef = useRef(symbol);
+
   // Return Twelve Data's datetime to a UNIX timestamp in seconds
   function adjustCandleTime(datetime) {
     // For some reason Twelve Data's datetime seems to be off by 1 hour compared to Finnhub's timestamps,
@@ -64,6 +66,14 @@ function StockPage({ watchlist, setWatchlist }) {
   useEffect(() => {
     const socket = socketRef.current;
     if (!socket || !symbol) return;
+
+    if (prevSymbolRef.current !== symbol) {
+      // If the symbol has changed, leave the previous stock room
+      socket.emit("leaveStockRoom", prevSymbolRef.current);
+      console.log("Leaving stock room for", prevSymbolRef.current);
+      prevSymbolRef.current = symbol; // Update the ref to the new symbol
+    }
+
     socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
 
     const handleStockPriceUpdate = (update) => {
@@ -79,8 +89,6 @@ function StockPage({ watchlist, setWatchlist }) {
                   ? 3600
                   : 86400;
           const updateTime = Math.floor(update.time / 1000);
-          console.log(lastCandle?.time);
-          console.log(updateTime);
 
           if (updateTime > lastCandle?.time + intervalSeconds) {
             // Add a new candle if the update time exceeds the current candle's time by the interval
