@@ -19,7 +19,7 @@ function StockPage({ watchlist, setWatchlist }) {
   const [graphInterval, setGraphInterval] = useState("1day");
   const isDaily = graphInterval === "1day";
 
-  const { socketRef } = useContext(SocketContext);
+  const { socketRef, isSocketReady } = useContext(SocketContext);
   const { currentStockDescription } = useContext(CurrentStockContext);
   const isInWatchlist = watchlist.some(
     // Check if the current stock is in the watchlist
@@ -54,7 +54,7 @@ function StockPage({ watchlist, setWatchlist }) {
         return [
           ...prev,
           {
-            symbol: symbol,
+            symbol: symbol.toUpperCase(),
             description: currentStockDescription,
             price: candles.length > 0 ? candles[candles.length - 1].close : 0,
           },
@@ -70,8 +70,10 @@ function StockPage({ watchlist, setWatchlist }) {
   // Handle real-time stock price updates
   useEffect(() => {
     const socket = socketRef.current;
-    if (!socket || !symbol) return;
-    socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
+    console.log("Test");
+    console.log(socket);
+    if (!socket || !symbol || !isSocketReady) return;
+    socket.emit("joinStockRoom", symbol.toUpperCase()); // Join a room specific to the stock symbol
     console.log("Joined stock room for", symbol);
     const handleStockPriceUpdate = (update) => {
       if (update.symbol === symbol.toUpperCase()) {
@@ -120,11 +122,17 @@ function StockPage({ watchlist, setWatchlist }) {
     // We store isInWatchlist in a ref and access the ref's current value in the cleanup function instead
     return () => {
       if (!isInWatchlistRef.current) {
-        socket.emit("leaveStockRoom", symbol);
+        socket.emit("leaveStockRoom", symbol.toUpperCase());
       }
       socket.off("stockPriceUpdate", handleStockPriceUpdate);
     };
-  }, [symbol, socketRef, graphInterval]);
+  }, [
+    symbol,
+    socketRef,
+    graphInterval,
+    currentStockDescription,
+    isSocketReady,
+  ]);
 
   // Initialize historical candles
   useEffect(() => {

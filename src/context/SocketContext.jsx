@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext();
@@ -6,15 +6,20 @@ const SocketContext = createContext();
 // Socket Context for our entire Dashboard component
 function SocketProvider({ children }) {
   const socketRef = useRef(null);
+  const [isSocketReady, setIsSocketReady] = useState(false);
   useEffect(() => {
     socketRef.current = io("http://localhost:3001");
-    return () => {
-      socketRef.current.disconnect();
-      socketRef.current = null;
-    };
+    socketRef.current.on("connect", () => {
+      console.log("Connected to Socket.IO server");
+      setIsSocketReady(true);
+    });
+    socketRef.current.on("disconnect", () => {
+      console.log("Disconnected from Socket.IO server");
+      setIsSocketReady(false);
+    });
   }, []);
   return (
-    <SocketContext.Provider value={{ socketRef }}>
+    <SocketContext.Provider value={{ socketRef, isSocketReady }}>
       {children}
     </SocketContext.Provider>
   );
