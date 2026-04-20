@@ -18,10 +18,6 @@ function StockPage({ watchlist, setWatchlist }) {
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
   const isDaily = graphInterval === "1day";
-  const chartContainerRef = useRef(null);
-  const seriesRef = useRef(null);
-
-  const isInWatchlistRef = useRef(false); // Ref to track if the stock is in the watchlist for use in the cleanup function
 
   const { socketRef } = useContext(SocketContext);
   const { currentStockDescription } = useContext(CurrentStockContext);
@@ -29,6 +25,10 @@ function StockPage({ watchlist, setWatchlist }) {
     // Check if the current stock is in the watchlist
     (item) => item.description === currentStockDescription,
   );
+  const isInWatchlistRef = useRef(isInWatchlist); // Ref to store the current value of isInWatchlist for access in the cleanup function
+
+  const chartContainerRef = useRef(null);
+  const seriesRef = useRef(null);
 
   // Return Twelve Data's datetime to a UNIX timestamp in seconds
   function adjustCandleTime(datetime) {
