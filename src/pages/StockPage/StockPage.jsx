@@ -15,14 +15,20 @@ import "./StockPage.css";
 
 function StockPage({ watchlist, setWatchlist }) {
   const { symbol } = useParams();
-  const chartContainerRef = useRef(null);
-  const seriesRef = useRef(null);
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
   const isDaily = graphInterval === "1day";
+  const chartContainerRef = useRef(null);
+  const seriesRef = useRef(null);
+
+  const isInWatchlistRef = useRef(false); // Ref to track if the stock is in the watchlist for use in the cleanup function
 
   const { socketRef } = useContext(SocketContext);
   const { currentStockDescription } = useContext(CurrentStockContext);
+  const isInWatchlist = watchlist.some(
+    // Check if the current stock is in the watchlist
+    (item) => item.description === currentStockDescription,
+  );
 
   // Return Twelve Data's datetime to a UNIX timestamp in seconds
   function adjustCandleTime(datetime) {
@@ -57,15 +63,16 @@ function StockPage({ watchlist, setWatchlist }) {
     });
   };
 
-  const isInWatchlist = watchlist.some(
-    (item) => item.description === currentStockDescription,
-  );
+  useEffect(() => {
+    isInWatchlistRef.current = isInWatchlist;
+  }, [isInWatchlist]);
 
+  // Handle real-time stock price updates
   useEffect(() => {
     const socket = socketRef.current;
     if (!socket || !symbol) return;
     socket.emit("joinStockRoom", symbol); // Join a room specific to the stock symbol
-
+    console.log("Joined stock room for", symbol);
     const handleStockPriceUpdate = (update) => {
       if (update.symbol === symbol.toUpperCase()) {
         setCandles((prevCandles) => {
@@ -79,8 +86,6 @@ function StockPage({ watchlist, setWatchlist }) {
                   ? 3600
                   : 86400;
           const updateTime = Math.floor(update.time / 1000);
-          console.log(lastCandle?.time);
-          console.log(updateTime);
 
           if (updateTime > lastCandle?.time + intervalSeconds) {
             // Add a new candle if the update time exceeds the current candle's time by the interval
@@ -110,15 +115,18 @@ function StockPage({ watchlist, setWatchlist }) {
 
     socket.on("stockPriceUpdate", handleStockPriceUpdate);
 
+    // When the cleanup function is attached when StockPage unmounts, it attaches isInWatchlist by its value at that time
+    // But since we want the current value of isInWatchlist when the cleanup function runs,
+    // We store isInWatchlist in a ref and access the ref's current value in the cleanup function instead
     return () => {
-      // If not on the watchlist leave the room when the component unmounts
-      if (!isInWatchlist) {
-        socket.emit("leaveStockRoom", symbol); // Leave the room when the component unmounts
+      if (!isInWatchlistRef.current) {
+        socket.emit("leaveStockRoom", symbol);
       }
       socket.off("stockPriceUpdate", handleStockPriceUpdate);
     };
-  }, [symbol, socketRef, graphInterval, isInWatchlist]);
+  }, [symbol, socketRef, graphInterval]);
 
+  // Initialize historical candles
   useEffect(() => {
     fetch(`http://localhost:3001/stock/${symbol}/${graphInterval}`)
       .then((res) => {
@@ -144,6 +152,7 @@ function StockPage({ watchlist, setWatchlist }) {
       });
   }, [symbol, graphInterval]);
 
+  // Chart setup
   useEffect(() => {
     const container = chartContainerRef.current;
     if (!container) return;

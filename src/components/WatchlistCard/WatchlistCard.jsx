@@ -23,7 +23,6 @@ function WatchlistCard({ stock }) {
   useEffect(() => {
     const socket = socketRef.current;
     if (!socket) return;
-    socket.emit("subscribe", stock.symbol);
     socket.on("stockPriceUpdate", (update) => {
       if (update.symbol === stock.symbol) {
         setStockPrice(update.price);
@@ -31,7 +30,7 @@ function WatchlistCard({ stock }) {
     });
 
     return () => {
-      socket.emit("unsubscribe", stock.symbol);
+      socket.off("stockPriceUpdate");
     };
   }, [socketRef, stock]);
 
@@ -40,7 +39,7 @@ function WatchlistCard({ stock }) {
       <button className="watchlist-card__btn" onClick={handleClick}>
         <span className="watchlist-card__symbol">{stock.symbol}</span>
         <span className="watchlist-card__price">
-          {stockPrice ? stockPrice.toFixed(2) : stock.price.toFixed(2)}
+          ${stockPrice ? stockPrice.toFixed(2) : stock.price.toFixed(2)}
         </span>
       </button>
     </li>
