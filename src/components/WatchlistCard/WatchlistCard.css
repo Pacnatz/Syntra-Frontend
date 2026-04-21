@@ -3,6 +3,22 @@
   margin-right: 10px;
   user-select: none;
   background-color: transparent;
+
+  transform: translateY(0px);
+  opacity: 1;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.watchlist-card.mounted {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.watchlist-card.unmounted {
+  transform: translateX(-150%);
+  opacity: 0;
 }
 
 .watchlist-card__btn {

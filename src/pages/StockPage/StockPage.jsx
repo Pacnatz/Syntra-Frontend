@@ -45,10 +45,11 @@ function StockPage({ watchlist, setWatchlist }) {
         prev.filter((item) => item.description === currentStockDescription)
           .length > 0
       ) {
-        // Remove the match
-        return prev.filter(
-          (item) => item.description !== currentStockDescription,
-        );
+        // Set unmount to true to trigger the animation
+        prev.find(
+          (item) => item.description === currentStockDescription,
+        ).unmount = true;
+        return [...prev];
       } else {
         // Otherwise, add the stock to the watchlist with its latest price
         return [
@@ -57,6 +58,7 @@ function StockPage({ watchlist, setWatchlist }) {
             symbol: symbol.toUpperCase(),
             description: currentStockDescription,
             price: candles.length > 0 ? candles[candles.length - 1].close : 0,
+            unmounted: false,
           },
         ];
       }
@@ -70,8 +72,6 @@ function StockPage({ watchlist, setWatchlist }) {
   // Handle real-time stock price updates
   useEffect(() => {
     const socket = socketRef.current;
-    console.log("Test");
-    console.log(socket);
     if (!socket || !symbol || !isSocketReady) return;
     socket.emit("joinStockRoom", symbol.toUpperCase()); // Join a room specific to the stock symbol
     console.log("Joined stock room for", symbol);

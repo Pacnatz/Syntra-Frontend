@@ -17,7 +17,7 @@ function Dashboard() {
     <SocketProvider>
       <CurrentStockProvider>
         <div className="dashboard">
-          <Sidebar watchlist={watchlist} />
+          <Sidebar watchlist={watchlist} setWatchlist={setWatchlist} />
           <div className="dashboard__content">
             <SearchBar setSearchLoading={setSearchLoading} />
             <div className="dashboard__panel">

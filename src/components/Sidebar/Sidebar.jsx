@@ -9,7 +9,7 @@ import Gear from "../../assets/Gear.svg";
 import Logo from "../../assets/Logo.svg";
 import "./Sidebar.css";
 
-function Sidebar({ watchlist }) {
+function Sidebar({ watchlist, setWatchlist }) {
   const [watchlistEnabled, setWatchlistEnabled] = useState(true);
 
   const handleToggle = () => {
@@ -31,7 +31,11 @@ function Sidebar({ watchlist }) {
         {watchlistEnabled ? (
           <ul className="sidebar__list">
             {watchlist.map((stock) => (
-              <WatchlistCard key={stock.description} stock={stock} />
+              <WatchlistCard
+                key={stock.description}
+                stock={stock}
+                setWatchlist={setWatchlist}
+              />
             ))}
           </ul>
         ) : (
