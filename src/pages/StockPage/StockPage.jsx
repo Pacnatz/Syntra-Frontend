@@ -306,6 +306,7 @@ function StockPage({ watchlist, setWatchlist }) {
         <button
           onClick={handleWatchlistToggle}
           className="stockpage__watchlist-btn"
+          title={isInWatchlist ? "Remove from Watchlist" : "Add to Watchlist"}
         >
           <img
             src={isInWatchlist ? StarFilled : StarEmpty}

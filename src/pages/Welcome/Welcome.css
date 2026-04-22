@@ -137,7 +137,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  row-gap: 44px;
+  row-gap: 15px;
 }
 
 .welcome__form-label {
@@ -171,6 +171,14 @@
   outline: none;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.welcome__input-error {
+  margin: 0 0 15px;
+  color: rgba(255, 0, 0, 0.7);
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  font-size: 14px;
 }
 
 .welcome__checkbox-label {
