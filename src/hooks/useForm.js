@@ -10,10 +10,23 @@ export function useForm(defaultValues) {
       [name]: {
         value,
         valid: evt.target.checkValidity(),
-        validityMessage: evt.target.validationMessage,
       },
     });
   };
 
-  return { values, handleChange, setValues };
+  const handleBlur = (evt) => {
+    const { name } = evt.target;
+    setValues({
+      ...values,
+      [name]: {
+        value: values[name].value,
+        valid: evt.target.checkValidity(),
+        validityMessage: evt.target.validity.patternMismatch
+          ? "Only letters and numbers are allowed."
+          : evt.target.validationMessage,
+      },
+    });
+  };
+
+  return { values, handleChange, handleBlur, setValues };
 }

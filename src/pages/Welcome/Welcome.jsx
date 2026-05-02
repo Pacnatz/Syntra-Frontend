@@ -29,6 +29,7 @@ function Welcome() {
   const {
     values: signupValues,
     handleChange: handleSignupChange,
+    handleBlur: handleSignupBlur,
     setValues: setSignupValues,
   } = useForm(signupDefaultValues);
 
@@ -155,10 +156,12 @@ function Welcome() {
                     type="text"
                     placeholder="Username"
                     className="welcome__form-input"
+                    pattern="^[A-Za-z0-9]+$"
                     minLength={2}
                     maxLength={20}
                     value={signupValues.username.value}
                     onChange={handleSignupChange}
+                    onBlur={handleSignupBlur}
                     required
                   />
                 </label>
@@ -177,6 +180,7 @@ function Welcome() {
                     className="welcome__form-input"
                     value={signupValues.email.value}
                     onChange={handleSignupChange}
+                    onBlur={handleSignupBlur}
                     required
                   />
                 </label>
@@ -196,6 +200,7 @@ function Welcome() {
                     minLength={3}
                     value={signupValues.password.value}
                     onChange={handleSignupChange}
+                    onBlur={handleSignupBlur}
                     required
                   />
                 </label>
@@ -217,6 +222,7 @@ function Welcome() {
                     className="welcome__form-input"
                     value={signupValues.confirmPassword.value}
                     onChange={handleSignupChange}
+                    onBlur={handleSignupBlur}
                     required
                   />
                 </label>
