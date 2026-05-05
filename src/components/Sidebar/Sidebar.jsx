@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import WatchlistToggle from "../Toggle/WatchlistToggle";
 import WatchlistCard from "../WatchlistCard/WatchlistCard";
@@ -10,11 +11,17 @@ import Logo from "../../assets/Logo.svg";
 import "./Sidebar.css";
 
 function Sidebar({ watchlist, setWatchlist }) {
+  const navigate = useNavigate();
   const [watchlistEnabled, setWatchlistEnabled] = useState(true);
 
   const handleToggle = () => {
     setWatchlistEnabled((prev) => !prev);
   };
+
+  const handleProfileClick = () => {
+    navigate("/dashboard");
+  };
+  
   return (
     <div className="sidebar">
       <div className="sidebar__logo">
@@ -140,7 +147,7 @@ function Sidebar({ watchlist, setWatchlist }) {
           />
           <p className="sidebar__profile-name">John Doe</p>
         </div>
-        <button className="sidebar__profile-btn">
+        <button onClick={handleProfileClick} className="sidebar__profile-btn">
           <img
             src={Gear}
             alt="Edit Profile Gear"
