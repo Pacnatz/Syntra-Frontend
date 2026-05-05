@@ -136,7 +136,7 @@ function StockPage({ watchlist, setWatchlist }) {
 
   // Initialize historical candles
   useEffect(() => {
-    fetch(`http://localhost:3001/stock/${symbol}/${graphInterval}`)
+    fetch(`/api/stock/${symbol}/${graphInterval}`)
       .then((res) => {
         return res.ok ? res.json() : Promise.reject(res.status);
       })

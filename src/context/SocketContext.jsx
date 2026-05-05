@@ -7,17 +7,25 @@ const SocketContext = createContext();
 function SocketProvider({ children }) {
   const socketRef = useRef(null);
   const [isSocketReady, setIsSocketReady] = useState(false);
+
   useEffect(() => {
-    socketRef.current = io("http://localhost:3001");
+    socketRef.current = io();
+
     socketRef.current.on("connect", () => {
       console.log("Connected to Socket.IO server");
       setIsSocketReady(true);
     });
+
     socketRef.current.on("disconnect", () => {
       console.log("Disconnected from Socket.IO server");
       setIsSocketReady(false);
     });
+
+    return () => {
+      socketRef.current?.disconnect();
+    };
   }, []);
+
   return (
     <SocketContext.Provider value={{ socketRef, isSocketReady }}>
       {children}

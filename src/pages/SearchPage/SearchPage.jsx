@@ -16,7 +16,7 @@ function SearchPage({ searchLoading, setSearchLoading }) {
       setSearchLoading(false);
       return;
     }
-    fetch("http://localhost:3001/search?q=" + encodeURIComponent(query.trim()))
+    fetch("/api/search?q=" + encodeURIComponent(query.trim()))
       .then((res) =>
         res.ok ? res.json() : Promise.reject({ status: res.status }),
       )
