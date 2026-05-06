@@ -10,7 +10,7 @@ import Gear from "../../assets/Gear.svg";
 import Logo from "../../assets/Logo.svg";
 import "./Sidebar.css";
 
-function Sidebar({ watchlist, setWatchlist }) {
+function Sidebar({ watchlist, setWatchlist, sidebarOpen }) {
   const navigate = useNavigate();
   const [watchlistEnabled, setWatchlistEnabled] = useState(true);
 
@@ -21,9 +21,9 @@ function Sidebar({ watchlist, setWatchlist }) {
   const handleProfileClick = () => {
     navigate("/dashboard");
   };
-  
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${sidebarOpen ? "sidebar_open" : ""}`}>
       <div className="sidebar__logo">
         <img
           src={Logo}
