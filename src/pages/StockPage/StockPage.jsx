@@ -11,6 +11,7 @@ import StarFilled from "../../assets/StarFilled.svg";
 import StarEmpty from "../../assets/StarEmpty.svg";
 import { SocketContext } from "../../context/SocketContext";
 import { CurrentStockContext } from "../../context/CurrentStockContext";
+import log from "../../utils/logger";
 import "./StockPage.css";
 
 function StockPage({ watchlist, setWatchlist }) {
@@ -74,7 +75,7 @@ function StockPage({ watchlist, setWatchlist }) {
     const socket = socketRef.current;
     if (!socket || !symbol || !isSocketReady) return;
     socket.emit("joinStockRoom", symbol.toUpperCase()); // Join a room specific to the stock symbol
-    console.log("Joined stock room for", symbol);
+    log("websocket", "Joined stock room for", symbol);
     const handleStockPriceUpdate = (update) => {
       if (update.symbol === symbol.toUpperCase()) {
         setCandles((prevCandles) => {
@@ -142,7 +143,7 @@ function StockPage({ watchlist, setWatchlist }) {
       })
       .then((datas) => {
         const { data, log: stockCache } = datas; // Destructure the response to get the actual data and log
-        console.log(stockCache); // Log the cache state for debugging
+        log("cache", stockCache); // Log the cache state for debugging
         setCandles(
           data.values
             .map((candle) => ({
