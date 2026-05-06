@@ -105,8 +105,8 @@ function StockPage({ watchlist, setWatchlist }) {
             // Update the current candle
             const updatedCandle = {
               ...lastCandle,
-              high: Math.max(lastCandle.high, update.price),
-              low: Math.min(lastCandle.low, update.price),
+              high: Math.max(lastCandle?.high, update.price),
+              low: Math.min(lastCandle?.low, update.price),
               close: update.price,
             };
             return [...prevCandles.slice(0, -1), updatedCandle];
