@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Sidebar from "../../components/Sidebar/Sidebar";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Profile from "../Profile/Profile";
-import SearchPage from "../SearchPage/SearchPage";
-import StockPage from "../StockPage/StockPage";
+import Sidebar from "../Sidebar/Sidebar";
+import SearchBar from "../SearchBar/SearchBar";
+import Profile from "../../pages/Profile/Profile";
+import SearchPage from "../../pages/SearchPage/SearchPage";
+import StockPage from "../../pages/StockPage/StockPage";
 import Menu from "../../assets/Menu.svg";
 import { SocketProvider } from "../../context/SocketContext";
 import { CurrentStockProvider } from "../../context/CurrentStockContext";
