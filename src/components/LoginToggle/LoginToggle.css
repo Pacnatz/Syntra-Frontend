@@ -70,3 +70,23 @@
   // styles when hovering and checked
 }
 */
+
+@media screen and (max-width: 900px) {
+  .login-toggle {
+    padding: 12px;
+    width: 200px;
+  }
+
+  .login-toggle__signup-text {
+    font-size: 12px;
+  }
+
+  .login-toggle__login-text {
+    font-size: 12px;
+  }
+
+  .login-toggle__checkbox:checked ~ .login-toggle__slider {
+    /* styles when not hovering and checked */
+    left: 110px;
+  }
+}
