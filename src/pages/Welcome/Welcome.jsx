@@ -23,7 +23,7 @@ function Welcome() {
   const signinDefaultValues = {
     username: { value: "", valid: false, validityMessage: "" },
     password: { value: "", valid: false, validityMessage: "" },
-    rememberme: { value: false, valid: false, validityMessage: "" },
+    rememberme: { checked: false, valid: false, validityMessage: "" },
   };
 
   const {
@@ -285,7 +285,7 @@ function Welcome() {
                     id="rememberme"
                     type="checkbox"
                     className="welcome__checkbox-input"
-                    checked={signinValues.rememberme.value}
+                    checked={signinValues.rememberme.checked}
                     onChange={handleSigninChange}
                   />
                   <span className="welcome__checkbox-box"></span>

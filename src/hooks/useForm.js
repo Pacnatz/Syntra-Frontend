@@ -4,11 +4,12 @@ export function useForm(defaultValues) {
   const [values, setValues] = useState(defaultValues);
 
   const handleChange = (evt) => {
-    const { value, name } = evt.target;
+    const { value, name, checked } = evt.target;
     setValues({
       ...values,
       [name]: {
         value,
+        checked,
         valid: evt.target.checkValidity(),
       },
     });
