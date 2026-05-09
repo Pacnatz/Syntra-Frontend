@@ -9,6 +9,7 @@ function SearchPage({ searchLoading, setSearchLoading }) {
   const [searchParams] = useSearchParams();
   const [searchResult, setSearchResult] = useState([]);
   const query = searchParams.get("q") || "";
+  const baseUrl = import.meta.env.VITE_BASE_URL || "";
 
   // Fetch search results whenever the query changes
   useEffect(() => {
@@ -16,7 +17,7 @@ function SearchPage({ searchLoading, setSearchLoading }) {
       setSearchLoading(false);
       return;
     }
-    fetch("/api/search?q=" + encodeURIComponent(query.trim()))
+    fetch(baseUrl + "/api/search?q=" + encodeURIComponent(query.trim()))
       .then((res) =>
         res.ok ? res.json() : Promise.reject({ status: res.status }),
       )
@@ -29,7 +30,7 @@ function SearchPage({ searchLoading, setSearchLoading }) {
       .finally(() => {
         setSearchLoading(false);
       });
-  }, [query, setSearchLoading]);
+  }, [query, setSearchLoading, baseUrl]);
 
   return (
     <>

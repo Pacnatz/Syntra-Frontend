@@ -18,6 +18,7 @@ function StockPage({ watchlist, setWatchlist }) {
   const { symbol } = useParams();
   const [candles, setCandles] = useState([]);
   const [graphInterval, setGraphInterval] = useState("1day");
+  const baseUrl = import.meta.env.VITE_BASE_URL || "";
   const isDaily = graphInterval === "1day";
 
   const { socketRef, isSocketReady } = useContext(SocketContext);
@@ -137,7 +138,7 @@ function StockPage({ watchlist, setWatchlist }) {
 
   // Initialize historical candles
   useEffect(() => {
-    fetch(`/api/stock/${symbol}/${graphInterval}`)
+    fetch(baseUrl + `/api/stock/${symbol}/${graphInterval}`)
       .then((res) => {
         return res.ok ? res.json() : Promise.reject(res.status);
       })
@@ -159,7 +160,7 @@ function StockPage({ watchlist, setWatchlist }) {
       .catch((error) => {
         console.error("Error fetching stock data:", error);
       });
-  }, [symbol, graphInterval]);
+  }, [symbol, graphInterval, baseUrl]);
 
   // Chart setup
   useEffect(() => {

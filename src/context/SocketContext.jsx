@@ -9,9 +9,10 @@ const SocketContext = createContext();
 function SocketProvider({ children }) {
   const socketRef = useRef(null);
   const [isSocketReady, setIsSocketReady] = useState(false);
+  const socketUrl = import.meta.env.VITE_BASE_URL || "";
 
   useEffect(() => {
-    socketRef.current = io();
+    socketRef.current = socketUrl ? io(socketUrl) : io();
 
     socketRef.current.on("connect", () => {
       log("websocket", "Connected to Socket.IO server");
@@ -26,7 +27,7 @@ function SocketProvider({ children }) {
     return () => {
       socketRef.current?.disconnect();
     };
-  }, []);
+  }, [socketUrl]);
 
   return (
     <SocketContext.Provider value={{ socketRef, isSocketReady }}>
