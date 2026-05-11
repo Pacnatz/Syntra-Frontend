@@ -2,13 +2,14 @@
 
 Syntra is a real-time collaborative trading and analysis platform where users can explore stocks together, share insights, and annotate charts live. Built with React and Vite, it focuses on interactive charting, live market updates, and collaborative tools for technical analysis. Future development includes social features, authentication, and expanded user collaboration.
 
-[Live App Demo] (https://syntra-frontend-one.vercel.app/)
+Live App Demo: [Demo](https://syntra-frontend-one.vercel.app/)
+Project Pitch Video: [Project Pitch](https://drive.google.com/drive/folders/1QtC27-A3LXkRWONJDQbCrtr3UcLuHT7Z?usp=sharing)
 
 ## Note to Instructor
 
 This project has a companion backend that is required for the app to function.
 
-Backend repository: [Syntra Backend](https://github.com/Pacnatz/Syntra-Backend)
+Backend repository: [Repo](https://github.com/Pacnatz/Syntra-Backend)
 
 Because this app connects to external APIs (Finnhub for live stock prices via WebSocket, and Twelve Data for historical candlestick data), a backend is necessary for stage 1 this is due to:
 
