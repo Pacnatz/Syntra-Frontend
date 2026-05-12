@@ -2,7 +2,7 @@
 
 Syntra is a real-time collaborative trading and analysis platform where users can explore stocks together, share insights, and annotate charts live. Built with React and Vite, it focuses on interactive charting, live market updates, and collaborative tools for technical analysis. Future development includes social features, authentication, and expanded user collaboration.
 
-Live App Demo: [Demo](https://syntra-frontend-one.vercel.app/)
+Live App Demo: [Demo](https://nhat-syntra.vercel.app/)
 Project Pitch Video: [Project Pitch](https://drive.google.com/drive/folders/1QtC27-A3LXkRWONJDQbCrtr3UcLuHT7Z?usp=sharing)
 
 ## Note to Instructor
