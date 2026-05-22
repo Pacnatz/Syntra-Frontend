@@ -1,0 +1,163 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import WatchlistToggle from "../Toggle/WatchlistToggle";
+import WatchlistCard from "../WatchlistCard/WatchlistCard";
+import TempImage from "../../assets/TempImage.svg";
+import Message from "../../assets/Message.svg";
+import Trash from "../../assets/Trash.svg";
+import Gear from "../../assets/Gear.svg";
+import Logo from "../../assets/Logo.svg";
+import "./Sidebar.css";
+
+function Sidebar({ watchlist, setWatchlist, sidebarOpen }) {
+  const navigate = useNavigate();
+  const [watchlistEnabled, setWatchlistEnabled] = useState(true);
+
+  const handleToggle = () => {
+    setWatchlistEnabled((prev) => !prev);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/dashboard");
+  };
+
+  return (
+    <div className={`sidebar ${sidebarOpen ? "sidebar_open" : ""}`}>
+      <div className="sidebar__logo">
+        <img
+          src={Logo}
+          alt="Logo"
+          className="sidebar__logo-img"
+          draggable={false}
+        />
+        <h1 className="sidebar__logo-text">Syntra</h1>
+      </div>
+      <div className="sidebar__panel">
+        <WatchlistToggle handleToggle={handleToggle} />
+        {watchlistEnabled ? (
+          <ul className="sidebar__list">
+            {watchlist.map((stock) => (
+              <WatchlistCard
+                key={stock.description}
+                stock={stock}
+                setWatchlist={setWatchlist}
+              />
+            ))}
+          </ul>
+        ) : (
+          <ul className="sidebar__list">
+            <li className="sidebar__list-item">
+              <div className="sidebar__friend">
+                <img
+                  src={TempImage}
+                  alt="Friend Image"
+                  className="sidebar__friend-img"
+                  draggable={false}
+                />
+                <p className="sidebar__list-item-text">Friend 1</p>
+              </div>
+              <div className="sidebar__list-icons">
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Message}
+                    alt="Message Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Trash}
+                    alt="Remove Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+              </div>
+            </li>
+            <li className="sidebar__list-item">
+              <div className="sidebar__friend">
+                <img
+                  src={TempImage}
+                  alt="Friend Image"
+                  className="sidebar__friend-img"
+                  draggable={false}
+                />
+                <p className="sidebar__list-item-text">Friend 2</p>
+              </div>
+              <div className="sidebar__list-icons">
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Message}
+                    alt="Message Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Trash}
+                    alt="Remove Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+              </div>
+            </li>
+            <li className="sidebar__list-item">
+              <div className="sidebar__friend">
+                <img
+                  src={TempImage}
+                  alt="Friend Image"
+                  className="sidebar__friend-img"
+                  draggable={false}
+                />
+                <p className="sidebar__list-item-text">Friend 3</p>
+              </div>
+              <div className="sidebar__list-icons">
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Message}
+                    alt="Message Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+                <button className="sidebar__list-icon-btn">
+                  <img
+                    src={Trash}
+                    alt="Remove Friend"
+                    className="sidebar__list-icon-img"
+                    draggable={false}
+                  />
+                </button>
+              </div>
+            </li>
+          </ul>
+        )}
+      </div>
+      <div className="sidebar__profile-icons">
+        <div className="sidebar__profile">
+          <img
+            src={TempImage}
+            alt="Profile"
+            className="sidebar__profile-img"
+            draggable={false}
+          />
+          <p className="sidebar__profile-name">John Doe</p>
+        </div>
+        <button onClick={handleProfileClick} className="sidebar__profile-btn">
+          <img
+            src={Gear}
+            alt="Edit Profile Gear"
+            className="sidebar__profile-gear"
+            draggable={false}
+          />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default Sidebar;

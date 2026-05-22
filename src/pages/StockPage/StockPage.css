@@ -1,0 +1,89 @@
+.stockpage {
+  padding: 10px;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.stockpage__header {
+  padding: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stockpage__interval-nav {
+  display: flex;
+  column-gap: 10px;
+}
+
+.stockpage__interval-btn {
+  width: 40px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    to bottom,
+    rgba(24, 241, 233, 0.1),
+    rgba(36, 208, 222, 0.1),
+    rgba(49, 145, 205, 0.1),
+    rgba(35, 132, 201, 0.1)
+  );
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stockpage__interval-btn:hover {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(
+    to bottom,
+    rgba(24, 241, 233, 0.2),
+    rgba(36, 208, 222, 0.2),
+    rgba(49, 145, 205, 0.2),
+    rgba(35, 132, 201, 0.2)
+  );
+}
+
+.stockpage__interval-btn[aria-pressed="true"] {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    to bottom,
+    rgba(24, 241, 233, 0.3),
+    rgba(36, 208, 222, 0.3),
+    rgba(49, 145, 205, 0.3),
+    rgba(35, 132, 201, 0.3)
+  );
+}
+
+.stockpage__watchlist-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.stockpage__watchlist-star {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.stockpage__graph {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

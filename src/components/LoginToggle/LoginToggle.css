@@ -1,0 +1,92 @@
+.login-toggle {
+  position: relative;
+  width: 316px;
+  padding: 16px 0px;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  user-select: none;
+}
+
+.login-toggle:hover {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+
+.login-toggle:hover > .login-toggle__slider {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.login-toggle__checkbox {
+  display: none;
+}
+
+.login-toggle__signup-text {
+  text-align: center;
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 800;
+}
+
+.login-toggle__login-text {
+  text-align: center;
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: 800;
+}
+
+.login-toggle__slider {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  left: -1px;
+  transition: left 0.3s ease;
+}
+
+/*
+.login-toggle:hover
+  .login-toggle__checkbox:not(:checked)
+  ~ .login-toggle__slider {
+  // styles when hovering and unchecked
+}
+*/
+
+.login-toggle__checkbox:checked ~ .login-toggle__slider {
+  /* styles when not hovering and checked */
+  left: 156px;
+}
+
+/*
+.login-toggle:hover .login-toggle__checkbox:checked ~ .login-toggle__slider {
+  // styles when hovering and checked
+}
+*/
+
+@media screen and (max-width: 900px) {
+  .login-toggle {
+    padding: 12px;
+    width: 200px;
+  }
+
+  .login-toggle__signup-text {
+    font-size: 12px;
+  }
+
+  .login-toggle__login-text {
+    font-size: 12px;
+  }
+
+  .login-toggle__checkbox:checked ~ .login-toggle__slider {
+    /* styles when not hovering and checked */
+    left: 110px;
+  }
+}

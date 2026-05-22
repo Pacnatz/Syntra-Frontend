@@ -1,0 +1,6 @@
+.app {
+  background-color: #0b0b0b;
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: hidden;
+}

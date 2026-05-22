@@ -1,0 +1,9 @@
+.dynamic-chart {
+  display: block;
+}
+
+@media screen and (max-width: 900px) {
+  .dynamic-chart {
+    display: none;
+  }
+}
